@@ -1,0 +1,645 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 26, 2023, 1:04:42 PM
+    Author     : letra
+*/
+
+
+.background{
+    background-image: url("https://futabus.vn/_nuxt/img/bg-3.0d434f3.png");
+}
+.background{
+    margin-top: 150px ;
+
+}
+.content{
+}
+.filter-select{
+    margin-right: 0px !important;
+}
+.content-departure{
+    margin-bottom: 10px;
+}
+
+#progress {
+    position: relative;
+    margin: 0 1.3% 30px 1.3%;
+}
+#progress-bar {
+    position: absolute;
+    background: lightseagreen;
+    height: 5px;
+    width: 0%;
+    top: 50%;
+    left: 0;
+}
+#progress-num {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+/*#progress-num::before {
+    content: "";
+    background-color: #cccccc;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 5px;
+    width: 98%;
+    margin: 0 1%;
+    z-index: 0;
+}*/
+#progress-num::after {
+    content: "";
+    background-color: #cccccc;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 5px;
+    width: 98%;
+    margin: 0 1%;
+    z-index: -99;
+}
+
+#progress-num .step {
+    border: 3px solid #ff6855;
+    background-color: #ff6855 !important;
+    color: #fff;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    background-color: #fff;
+    font-family: sans-serif;
+    font-size: 14px;
+    position: relative;
+    /*z-index: 1;*/
+    font-weight: bold;
+}
+.milistones-detaile{
+    font-weight: bold;
+    color: #ff6855;
+    font-size: 0.9rem;
+}
+.card{
+    margin: 20px 15% !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+}
+.card-body{
+    padding-bottom:0 !important;
+}
+.card:hover{
+    cursor: default !important;
+    transform: none !important;
+}
+.card-header h4{
+    margin-bottom: 0;
+}
+.card-header img{
+    width: 28px;
+    height: 7px;
+}
+.card-title{
+    text-align: left !important;
+    margin-bottom: 0;
+    color: #000 !important;
+}
+.card-text{
+    text-align: left !important;
+}
+.card-body-detail{
+    background-color: #edeff0;
+    width: 40%;
+    padding: 8px;
+    border-radius: 19px;
+    margin-bottom: 10px;
+}
+.trip-info{
+    color: grey;
+    font-size: 25px;
+    font-weight: 500;
+}
+.route-orign{
+    font-weight: 500;
+}
+.font-orign{
+    color: red;
+}
+.route-destinations{
+    font-weight: 500;
+}
+.font-destinations{
+    color: blue;
+}
+.route-detail{
+    margin-left: 2.6%;
+    font-size: 14px;
+    color: #004300;
+}
+.btn-back{
+    height:50px;
+    border: solid #ff6855;
+    border-radius: 50px;
+    font-size: 20px;
+    color: #ff6855;
+}
+.btn-back:hover{
+    border: solid #ff6855;
+    background-color: #ff6855;
+    font-size: 20px;
+}
+
+.nav-choose{
+    width: 50% !important;
+    color:#000;
+    font-weight: 500;
+}
+.nav-choose:active{
+    color: #ff6855 !important;
+}
+/**/
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+html {
+    font-size: 16px;
+}
+/* 24 Seats*/
+
+.bus-24-seats {
+    margin: 20px auto;
+    max-width: 300px;
+}
+.bus-24-seats .exit {
+    position: relative;
+    height: 50px;
+}
+.bus-24-seats .exit:before, .bus-24-seats .exit:after {
+    content: "EXIT";
+    font-size: 14px;
+    line-height: 18px;
+    padding: 0px 2px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    display: block;
+    position: absolute;
+    background: green;
+    color: white;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+.bus-24-seats .exit:before {
+    left: 0;
+}
+.bus-24-seats .exit:after {
+    right: 0;
+}
+.bus-24-seats .fuselage {
+    border-right: 5px solid #d8d8d8;
+    border-left: 5px solid #d8d8d8;
+}
+.bus-24-seats ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.bus-24-seats .seats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+.bus-24-seats .seat {
+    display: flex;
+    flex: 0 0 14.2857142857%;
+    padding: 5px;
+    position: relative;
+}
+.bus-24-seats .seat:nth-child(1) {
+    margin-right: 71%;
+}
+.bus-24-seats .seat input[type=checkbox] {
+    position: absolute;
+    opacity: 0;
+}
+.bus-24-seats .seat input[type=checkbox]:checked + label {
+    background: #bada55;
+    -webkit-animation-name: rubberBand;
+    animation-name: rubberBand;
+    animation-duration: 300ms;
+    animation-fill-mode: both;
+}
+.bus-24-seats .seat input[type=checkbox]:disabled + label {
+    background: #f42536;
+    text-indent: -9999px;
+    overflow: hidden;
+}
+.bus-24-seats .seat input[type=checkbox]:disabled + label:after {
+    content: "X";
+    text-indent: 0;
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+.bus-24-seats .seat input[type=checkbox]:disabled + label:hover {
+    box-shadow: none;
+    cursor: not-allowed;
+}
+.bus-24-seats .seat label {
+    display: block;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.5rem;
+    padding: 4px 0;
+    background: #ebebeb;
+    border-radius: 5px;
+    animation-duration: 300ms;
+    animation-fill-mode: both;
+}
+.bus-24-seats .seat label:before {
+    content: "";
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    top: 1px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    background: rgba(255, 255, 255, .4);
+    border-radius: 3px;
+}
+.bus-24-seats .seat label:hover {
+    cursor: pointer;
+    box-shadow: 0 0 0px 2px #5c6aff;
+}
+
+
+/* 36 Seats*/
+.route-option-36seats .bus {
+    margin: 20px auto;
+    max-width: 300px;
+}
+.route-option-36seats .exit {
+    position: relative;
+    height: 50px;
+}
+.route-option-36seats .exit:before, .exit:after {
+    content: "EXIT";
+    font-size: 14px;
+    line-height: 18px;
+    padding: 0px 2px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    display: block;
+    position: absolute;
+    background: green;
+    color: white;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+.route-option-36seats .exit:before {
+    left: 0;
+}
+.route-option-36seats .exit:after {
+    right: 0;
+}
+.route-option-36seats .fuselage {
+    border-right: 5px solid #d8d8d8;
+    border-left: 5px solid #d8d8d8;
+}
+.route-option-36seats ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.route-option-36seats .seats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+.route-option-36seats .seat {
+    display: flex;
+    flex: 0 0 18%;
+    padding: 5px;
+    position: relative;
+}
+.route-option-36seats .seat:nth-child(2) {
+    margin-right: 29%;
+}
+.route-option-36seats .seat input[type=checkbox] {
+    position: absolute;
+    opacity: 0;
+}
+.route-option-36seats .seat input[type=checkbox]:checked + label {
+    background: #bada55;
+    -webkit-animation-name: rubberBand;
+    animation-name: rubberBand;
+    animation-duration: 300ms;
+    animation-fill-mode: both;
+}
+.route-option-36seats .seat input[type=checkbox]:disabled + label {
+    background: #f87c86;
+    text-indent: -9999px;
+    overflow: hidden;
+}
+.route-option-36seats .seat input[type=checkbox]:disabled + label:after {
+    content: "X";
+    text-indent: 0;
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+.route-option-36seats .seat input[type=checkbox]:disabled + label:hover {
+    box-shadow: none;
+    cursor: not-allowed;
+}
+.route-option-36seats .seat label {
+    display: block;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.5rem;
+    padding: 4px 0;
+    background: #f42536;
+    border-radius: 5px;
+    animation-duration: 300ms;
+    animation-fill-mode: both;
+}
+.route-option-36seats .seat label:before {
+    content: "";
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    top: 1px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    background: rgba(255, 255, 255, .4);
+    border-radius: 3px;
+}
+.route-option-36seats .seat label:hover {
+    cursor: pointer;
+    box-shadow: 0 0 0px 2px #5c6aff;
+}
+.route-option-36seats .seat {
+    display: flex;
+    flex: 0 0 14.2857142857%;
+    padding: 5px;
+    position: relative;
+}
+.route-option-36seats .seat:nth-child(1) {
+    margin-right: 29%;
+}
+.route-option-36seats .seat input[type=checkbox] {
+    position: absolute;
+    opacity: 0;
+    
+}
+.route-option-36seats .seat input[type=checkbox]:checked + label {
+    background: #bada55;
+    -webkit-animation-name: rubberBand;
+    animation-name: rubberBand;
+    animation-duration: 300ms;
+    animation-fill-mode: both;
+}
+.route-option-36seats .seat input[type=checkbox]:disabled + label {
+    background: #f42536;
+    text-indent: -9999px;
+    overflow: hidden;
+}
+.route-option-36seats .seat input[type=checkbox]:disabled + label:after {
+    content: "X";
+    text-indent: 0;
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+.route-option-36seats .seat input[type=checkbox]:disabled + label:hover {
+    box-shadow: none;
+    cursor: not-allowed;
+}
+.route-option-36seats .seat label {
+    display: block;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.5rem;
+    padding: 4px 0;
+    background: #ebebeb ;
+    border-radius: 5px;
+    animation-duration: 300ms;
+    animation-fill-mode: both;
+}
+.route-option-36seats .seat label:before {
+    content: "";
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    top: 1px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    background: rgba(255, 255, 255, .4);
+    border-radius: 3px;
+}
+.route-option-36seats .seat label:hover {
+    cursor: pointer;
+    box-shadow: 0 0 0px 2px #5c6aff;
+}
+@-webkit-keyframes rubberBand {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+    30% {
+        -webkit-transform: scale3d(1.25, 0.75, 1);
+        transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+        -webkit-transform: scale3d(0.75, 1.25, 1);
+        transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+        -webkit-transform: scale3d(1.15, 0.85, 1);
+        transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+        -webkit-transform: scale3d(0.95, 1.05, 1);
+        transform: scale3d(0.95, 1.05, 1);
+    }
+    75% {
+        -webkit-transform: scale3d(1.05, 0.95, 1);
+        transform: scale3d(1.05, 0.95, 1);
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+@keyframes rubberBand {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+    30% {
+        -webkit-transform: scale3d(1.25, 0.75, 1);
+        transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+        -webkit-transform: scale3d(0.75, 1.25, 1);
+        transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+        -webkit-transform: scale3d(1.15, 0.85, 1);
+        transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+        -webkit-transform: scale3d(0.95, 1.05, 1);
+        transform: scale3d(0.95, 1.05, 1);
+    }
+    75% {
+        -webkit-transform: scale3d(1.05, 0.95, 1);
+        transform: scale3d(1.05, 0.95, 1);
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+.rubberBand {
+    -webkit-animation-name: rubberBand;
+    animation-name: rubberBand;
+}
+
+.explain{
+    font-weight: bold;
+}
+
+.route-button{
+    width: 100%;
+    color: #ff6855;
+    font-weight: 500;
+}
+
+.td{
+    color: #ff6855 !important;
+}
+.seat-option{
+    margin: 30px 2% !important;
+}
+
+.seat-option-btn{
+    width: 50%;
+    height:50px;
+    border-radius: 50px;
+    border: none;
+    font-size: 20px;
+}
+.seat-option-btn button{
+    width: 100%;
+    background-color: #ff6855;
+    color: #fff !important;
+
+}
+
+.seat-option-btn button:hover{
+    background-color: green;
+    border: none;
+}
+.route-information-btn{
+    width: 50% !important;
+
+}
+.route-information-btn button{
+    width: 100%;
+    background-color: #ff6855;
+    color: #fff !important;
+
+}
+.route-information-btn button:hover{
+    background-color: green;
+    border: none;
+}
+.seats-detailed{
+    margin: 0 3% !important;
+}
+
+
+/*Table Choose TIcket*/
+@import "compass/css3";
+.responstable {
+    margin: 1em 0;
+    width: 100%;
+    overflow: hidden;
+    background: #fff;
+    color: #024457;
+    border-radius: 10px;
+    border: 1px solid #167f92;
+}
+.responstable tr {
+    border: 1px solid #d9e4e6;
+}
+.responstable tr:nth-child(odd) {
+    background-color: #eaf3f3;
+}
+.responstable th {
+    display: none;
+    border: 1px solid #fff;
+    background-color: #167f92;
+    color: #fff;
+    padding: 1em;
+}
+.responstable th:first-child {
+    display: table-cell;
+    text-align: center;
+}
+.responstable th:nth-child(2) {
+    display: table-cell;
+}
+.responstable th:nth-child(2) span {
+    display: none;
+}
+.responstable th:nth-child(2):after {
+    content: attr(data-th);
+}
+@media (min-width: 480px) {
+
+}
+.responstable td {
+    display: block;
+    word-wrap: break-word;
+    max-width: 7em;
+}
+.responstable td:first-child {
+    display: table-cell;
+    text-align: center;
+    border-right: 1px solid #d9e4e6;
+}
+@media (min-width: 480px) {
+    .responstable td {
+        border: 1px solid #d9e4e6;
+    }
+}
+.responstable th, .responstable td {
+    margin: 0.5em 1em;
+}
+@media (min-width: 480px) {
+    .responstable th, .responstable td {
+        display: table-cell;
+        padding: 1em;
+    }
+}
