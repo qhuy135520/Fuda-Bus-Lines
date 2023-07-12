@@ -13,7 +13,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.BookingDetailDTO;
 import model.Customer;
 
@@ -61,6 +69,8 @@ public class HistoryPurchaseListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter fomatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         HttpSession session = request.getSession();
         BookingDao bookingDao = new BookingDao();
@@ -92,9 +102,27 @@ public class HistoryPurchaseListServlet extends HttpServlet {
         if (count % 10 != 0) {
             endPage++;
         }
+//        Check Date Diff
+        HashMap<Integer, Integer> dateDiffMap = new HashMap<>();
+        int i = 0;
+        for (BookingDetailDTO bookingDetailDTO : bookingDetailDTOList) {
+            i += 1;
+            try {
+                int checkDateDiff = find(fomatter.format(date), fomatter.format(bookingDetailDTO.getBooking().getTripSeatDetail().getTripDetail().getDate()));
+//                request.setAttribute("checkDateDiff" + i, checkDateDiff);
+                System.out.println(checkDateDiff);
+
+                dateDiffMap.put(i, checkDateDiff);
+            } catch (ParseException ex) {
+                Logger.getLogger(HistoryPurchaseListServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
 
         session.setAttribute("page", page);
         request.setAttribute("endPage", endPage);
+        request.setAttribute("LocaldateNow", date);
+        request.setAttribute("dateDiffMap", dateDiffMap);
         request.setAttribute("bookingDetailDTOList", bookingDetailDTOList);
         request.getRequestDispatcher("HistoryPurchase.jsp").forward(request, response);
     }
@@ -122,5 +150,27 @@ public class HistoryPurchaseListServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public static int find(String join_date, String leave_date) throws ParseException {
+        SimpleDateFormat obj = new SimpleDateFormat("yyyy-MM-dd");
+        // creating the date 1 with sample input date.
+        Date date1 = obj.parse(join_date);
+
+        // creating the date 2 with sample input date.
+        Date date2 = obj.parse(leave_date);
+
+        // getting milliseconds for both dates
+        long date1InMs = date1.getTime();
+        long date2InMs = date2.getTime();
+
+        // getting the diff between two dates.
+        long timeDiff = date2InMs - date1InMs;
+
+        // converting diff into days
+        int daysDiff = (int) (timeDiff / (1000 * 60 * 60 * 24));
+
+        // print diff in days
+        return daysDiff;
+    }
 
 }

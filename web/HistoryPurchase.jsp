@@ -5,6 +5,9 @@
 --%>
 
 <%@page import="dal.StationDAO"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -246,8 +249,11 @@
                             <th>Action</th>
                         </tr>
                         <c:set var="countTr" value="1"/>
+                        <c:set var="i" value="0"/>
                         <c:forEach items="${bookingDetailDTOList}" var="bookingDetailDTO">
                             <c:set var="countTr" value="${countTr+1}"/>    
+                            <c:set var="i" value="${i+1}" />
+
                             <tr class="text-center">
                                 <td>${bookingDetailDTO.tripDetailId}</td>
                                 <td>${bookingDetailDTO.seatName}</td>
@@ -260,10 +266,19 @@
                                 <td>${bookingDetailDTO.bookingDate}</td>
                                 <td>${bookingDetailDTO.bookingStatus}</td>
                                 <c:if test="${bookingDetailDTO.bookingStatus=='paid'}">
-
                                     <td>
                                         <button onclick="window.location = 'ShowTicketPurchasedServlet?bookingId=${bookingDetailDTO.booking.bookingId}'" type="button" class="btn btn-success">See Ticket</button>
-                                        <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#CancelModal${bookingDetailDTO.booking.bookingId}">Cancel</button>
+                                        <c:forEach items="${dateDiffMap}" var="dateDiffMap">
+                                            <c:if test="${i == dateDiffMap.key}">
+                                                <c:if test="${dateDiffMap.value > 0}">
+                                                    <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#CancelModal${bookingDetailDTO.booking.bookingId}">Cancel</button>
+                                                </c:if>
+                                                <c:if test="${dateDiffMap.value < 1}">
+                                                    <button disabled="" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#CancelModal${bookingDetailDTO.booking.bookingId}">Cancel</button>
+                                                </c:if> 
+                                            </c:if>
+                                        </c:forEach>
+
                                         <div class="modal fade" id="CancelModal${bookingDetailDTO.booking.bookingId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">

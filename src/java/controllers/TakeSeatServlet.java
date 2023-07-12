@@ -127,9 +127,11 @@ public class TakeSeatServlet extends HttpServlet {
             System.out.println(page);
 
             List<Customer> listCustomer = customerDao.getAllCustomerPagination(page);
+            List<Customer> listCustomerFull = customerDao.getAllCustomer();
             session.setAttribute("page", page);
             request.setAttribute("endPage", endPage);
             request.setAttribute("listCustomer", listCustomer);
+            request.setAttribute("listCustomerFull", listCustomerFull);
             request.getRequestDispatcher("CustomerBookingConfirm.jsp").forward(request, response);
         }
     }

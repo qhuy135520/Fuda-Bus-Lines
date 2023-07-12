@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.employee;
+package controllers.customer;
 
-import dal.BookingDetailDTODao;
+import dal.BookingDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,14 +12,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.BookingDetailDTO;
 
 /**
  *
  * @author letra
  */
-public class ListRefundingServlet extends HttpServlet {
+public class CustomerPaypalPaymentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +36,10 @@ public class ListRefundingServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ListRefundingServlet</title>");
+            out.println("<title>Servlet CustomerPaypalPaymentServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ListRefundingServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CustomerPaypalPaymentServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,30 +58,15 @@ public class ListRefundingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String page_raw = request.getParameter("page");
-        BookingDetailDTODao bookingDetailDTODao = new BookingDetailDTODao();
-
-        int page = 1;
-        if (page_raw != null) {
-            page = Integer.parseInt(page_raw);
+        BookingDao bookingDao = new BookingDao();
+        
+        String[] bookingId = (String[]) session.getAttribute("listPay");
+        for (String booking : bookingId) {
+            int id = Integer.parseInt(booking);
+            bookingDao.updateBookingStatus(id, "paid");
+            bookingDao.updateCodeAndPaidDate(id, null);
         }
-
-        int count = bookingDetailDTODao.getAllBookingDetailHaveRefunding().size();
-
-        int endPage = count / 10;
-        if (count % 10 != 0) {
-            endPage++;
-        } else if (count == 0) {
-            endPage = 1;
-        }
-        List<BookingDetailDTO> bookingDetailDTOList = bookingDetailDTODao.getAllBookingDetailHaveRefundingWithPagination(page);
-        System.out.println(endPage);
-        System.out.println(count);
-        session.setAttribute("page", page);
-        request.setAttribute("endPage", endPage);
-        request.setAttribute("bookingDetailDTOList", bookingDetailDTOList);
-        request.getRequestDispatcher("EmployeeRefundingList.jsp").forward(request, response);
-
+        response.sendRedirect("PaypalSuccess.jsp");
     }
 
     /**
