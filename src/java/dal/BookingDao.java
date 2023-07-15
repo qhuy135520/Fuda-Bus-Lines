@@ -4,26 +4,24 @@
  */
 package dal;
 
-import static com.oracle.wls.shaded.org.apache.xalan.lib.ExsltDatetime.date;
+import static controllers.customer.HistoryPurchaseListServlet.find;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import model.Booking;
-import org.apache.naming.java.javaURLContextFactory;
 
 /**
  *
  * @author ACER NITRO 5
  */
 public class BookingDao extends DBContext {
-    
+
     private String query;
     private PreparedStatement pst;
     private ResultSet rs;
@@ -33,7 +31,7 @@ public class BookingDao extends DBContext {
         List<Booking> list = new ArrayList<>();
         CustomerDao customerDao = new CustomerDao();
         TripSeatDao tripSeatDao = new TripSeatDao();
-        
+
         try {
             query = "select * from booking where c_phone=? order by b_date DESC";
             pst = connection.prepareStatement(query);
@@ -61,7 +59,7 @@ public class BookingDao extends DBContext {
         List<Booking> list = new ArrayList<>();
         CustomerDao customerDao = new CustomerDao();
         TripSeatDao tripSeatDao = new TripSeatDao();
-        
+
         try {
             query = "select * from booking where c_phone=? and b_status ='paid'";
             pst = connection.prepareStatement(query);
@@ -75,7 +73,7 @@ public class BookingDao extends DBContext {
                 booking.setBookedTime(rs.getString("b_time"));
                 booking.setTripSeatDetail(tripSeatDao.getTripSeatDetailById(rs.getString("ts_id")));
                 list.add(booking);
-                
+
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -88,7 +86,7 @@ public class BookingDao extends DBContext {
         List<Booking> list = new ArrayList<>();
         CustomerDao customerDao = new CustomerDao();
         TripSeatDao tripSeatDao = new TripSeatDao();
-        
+
         try {
             query = "select * from booking where c_phone=? and b_status ='order'";
             pst = connection.prepareStatement(query);
@@ -102,7 +100,7 @@ public class BookingDao extends DBContext {
                 booking.setBookedTime(rs.getString("b_time"));
                 booking.setTripSeatDetail(tripSeatDao.getTripSeatDetailById(rs.getString("ts_id")));
                 list.add(booking);
-                
+
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -115,7 +113,7 @@ public class BookingDao extends DBContext {
         List<Booking> list = new ArrayList<>();
         CustomerDao customerDao = new CustomerDao();
         TripSeatDao tripSeatDao = new TripSeatDao();
-        
+
         try {
             query = "select * from booking where c_phone=? and b_status ='canceled'";
             pst = connection.prepareStatement(query);
@@ -129,7 +127,7 @@ public class BookingDao extends DBContext {
                 booking.setBookedTime(rs.getString("b_time"));
                 booking.setTripSeatDetail(tripSeatDao.getTripSeatDetailById(rs.getString("ts_id")));
                 list.add(booking);
-                
+
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -142,7 +140,7 @@ public class BookingDao extends DBContext {
     // neu mua ve thi b-status ="paid"
     public void insertBooking(List<String> tripSeatDetailIds, String customerPhone, String status) {
         TripSeatDao tripSeatDao = new TripSeatDao();
-        
+
         try {
             for (String tripSeatDetailId : tripSeatDetailIds) {
                 query = "insert into booking(c_phone, ts_id, b_status, b_date,b_time, code, paid_date) values (?,?,?,?,?, null, null)";
@@ -156,14 +154,14 @@ public class BookingDao extends DBContext {
 
                 // update status cua ve trong trip_seat_detail = false
                 tripSeatDao.updateStatusById(tripSeatDetailId, false);
-                
+
             }
-            
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public Booking getBookingById(int id) {
         Booking booking = null;
         TripSeatDao tripSeatDao = new TripSeatDao();
@@ -173,7 +171,7 @@ public class BookingDao extends DBContext {
             pst = connection.prepareStatement(query);
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
-            
+
             while (rs.next()) {
                 booking = new Booking();
                 booking.setBookedDate(rs.getDate("b_date").toLocalDate());
@@ -211,7 +209,7 @@ public class BookingDao extends DBContext {
         } catch (SQLException e) {
         }
     }
-    
+
     public int getRevenueByMonthAndYear(int date, int year) {
         int sum = 0;
         try {
@@ -219,7 +217,7 @@ public class BookingDao extends DBContext {
             pst = connection.prepareStatement(query);
             pst.setInt(1, date);
             pst.setInt(2, year);
-            
+
             rs = pst.executeQuery();
             while (rs.next()) {
                 sum = rs.getInt("amount");
@@ -238,7 +236,7 @@ public class BookingDao extends DBContext {
         }
         return map;
     }
-    
+
     public void updateBookingStatusByTripDetailId(String tripDetailId) {
         try {
             query = "  Update booking set b_status ='refunding' where ts_id IN (SELECT ts_id FROM trip_seat_detail WHERE td_id=? ) and b_status='paid';\n"
@@ -250,7 +248,7 @@ public class BookingDao extends DBContext {
         } catch (SQLException e) {
         }
     }
-    
+
     public void updateCodeAndPaidDate(int bookingId, String code) {
         try {
             query = "update booking set code =?, paid_date=? where b_id=?";
@@ -262,7 +260,7 @@ public class BookingDao extends DBContext {
         } catch (SQLException e) {
         }
     }
-    
+
     public void updatePaidDateByEmployee(int bookingId) {
         String sql = "UPDATE [dbo].[booking]\n"
                 + "   SET [paid_date] = ?\n"
@@ -271,25 +269,27 @@ public class BookingDao extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
             st.setInt(2, bookingId);
-            
-            
+
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
+
+   
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         LocalDate date = LocalDate.now();
-        BookingDao bookingDao = new BookingDao();
-        Map<Integer, Integer> revenue = bookingDao.getListOfRevenueByMonths(1, 12, date.getYear());
-        int revenueThisMonth = 0;
-        for (Integer name : revenue.keySet()) {
-            
-            System.out.println(name+": "+revenue.get(name));
-            
-        }
-        System.out.println(revenueThisMonth);
-  
+//        BookingDao bookingDao = new BookingDao();
+//        Map<Integer, Integer> revenue = bookingDao.getListOfRevenueByMonths(1, 12, date.getYear());
+//        int revenueThisMonth = 0;
+//        for (Integer name : revenue.keySet()) {
+//            
+//            System.out.println(name+": "+revenue.get(name));
+//            
+//        }
+//        System.out.println(revenueThisMonth);
+        System.out.println(find("2023-07-10", "2023-07-09"));
+        
     }
 }

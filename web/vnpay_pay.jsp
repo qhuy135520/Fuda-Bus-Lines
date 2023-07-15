@@ -167,7 +167,7 @@
         <div class="container-pay" style="margin-top:100px; ">
             <div class="header clearfix">
 
-                <h3 class="text-muted">VNPAY DEMO</h3>
+          
             </div>
             <h3>Tạo mới đơn hàng</h3>
             <div class="table-responsive">

@@ -73,7 +73,7 @@ public class PayTicketPurchaseServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         BookingDao bookingDao = new BookingDao();
-
+        String paymentMethod = request.getParameter("payment-method");
         String[] bookingId = request.getParameterValues("bookingId");
         int price = 0;
 
@@ -83,8 +83,13 @@ public class PayTicketPurchaseServlet extends HttpServlet {
         }
         session.setAttribute("listPay", bookingId);
         session.setAttribute("price", price);
-        response.sendRedirect("vnpay_pay.jsp");
-       
+        session.setAttribute("price_paypal", (Math.ceil((float) price / 23650)));
+        if (paymentMethod.equals("vnpay")) {
+            response.sendRedirect("vnpay_pay.jsp");
+        } else {
+            response.sendRedirect("Paypal_pay.jsp");
+        }
+
     }
 
     /**

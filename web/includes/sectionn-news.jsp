@@ -7,7 +7,7 @@
             <div class="slide-track">
                 <div class="slide">
                     <img
-                        src="https://cdn.vato.vn/google-storage/facecar-29ae7.appspot.com/images/7bb539ab-99af-45c1-ba1f-7e67e9faf2de-1680316725359.png"
+                        src="https://vnpay.vn/s1/statics.vnpay.vn/2023/4/01gocmdo2his1682310774411.jpg"
                         height="300"
                         width="750"
                         alt=""
@@ -15,7 +15,7 @@
                 </div>
                 <div class="slide">
                     <img
-                        src="https://cdn.vato.vn/google-storage/facecar-29ae7.appspot.com/images/16dff57f-e457-4ca0-a874-8b8c92a31953-1683788518649.png"
+                        src="https://cdcbus.com.au/wp-content/uploads/2021/12/Moove-Media-Shift-Customers-to-You-by-Targeting-Mass-Audiences-1024x464.jpg.webp"
                         height="300"
                         width="750"
                         alt=""
@@ -23,7 +23,7 @@
                 </div>
                 <div class="slide">
                     <img
-                        src="https://cdn.vato.vn/google-storage/facecar-29ae7.appspot.com/images/c81fedd6-45b8-463f-b81f-f08e27352503-1683786862681.png"
+                        src="https://www.adweek.com/wp-content/uploads/files/news_article/paypal.jpeg"
                         height="300"
                         width="750"
                         alt=""
@@ -31,7 +31,7 @@
                 </div>
                 <div class="slide">
                     <img
-                        src="https://cdn.vato.vn/google-storage/facecar-29ae7.appspot.com/images/ba6cca25-230e-42c7-a772-3772288d6347-1683096725863.jpg"
+                        src="https://hcmuni.fpt.edu.vn/Data/Sites/1/News/6156/fbus.jpg"
                         height="300"
                         width="750"
                         alt=""
@@ -39,7 +39,7 @@
                 </div>
                 <div class="slide">
                     <img
-                        src="https://cdn.vato.vn/google-storage/facecar-29ae7.appspot.com/images/694c2d1a-34ab-4a65-98c3-2341af5006c6-1682561230354.jpg"
+                        src="https://www.shutterstock.com/image-vector/time-travel-flat-vector-yellow-260nw-516329791.jpg"
                         height="300"
                         width="750"
                         alt=""
@@ -47,7 +47,7 @@
                 </div>
                 <div class="slide">
                     <img
-                        src="https://cdn.vato.vn/google-storage/facecar-29ae7.appspot.com/images/7bb539ab-99af-45c1-ba1f-7e67e9faf2de-1680316725359.png"
+                        src="https://media-api.advertisingvietnam.com/oapi/v1/media?uuid=ed9913be-8e5b-4ce1-b0c0-b1d055403a66&resolution=737x389&type=image"
                         height="300"
                         width="750"
                         alt=""
