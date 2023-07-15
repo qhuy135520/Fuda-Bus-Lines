@@ -141,7 +141,9 @@ public class RegisterForCustomerServlet extends HttpServlet {
             } catch (MessagingException ex) {
                 Logger.getLogger(RegisterForCustomerServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
             request.setAttribute("listCustomer", listCustomer);
+            request.setAttribute("listCustomerFull",customerDao.getAllCustomer());
             request.getRequestDispatcher("CustomerBookingConfirm.jsp").forward(request, response);
 
         } else if (c_raw_phone != null) {

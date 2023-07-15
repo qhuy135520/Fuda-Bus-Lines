@@ -74,7 +74,7 @@ public class CustomerBookingConfirmServlet extends HttpServlet {
         String page_raw = request.getParameter("page");
 
         TripDetail tripDetail = (TripDetail) session.getAttribute("tripDetail");
-     
+
 //      Pagination
         int page = 1;
         int endPage = 1;
@@ -95,6 +95,7 @@ public class CustomerBookingConfirmServlet extends HttpServlet {
         request.setAttribute("date", tripDetail.getDate().format(formatter));
         request.setAttribute("tripDetailId", tripDetail.getTripDetailId());
         request.setAttribute("listCustomer", listCustomer);
+        request.setAttribute("listCustomerFull", customerDao.getAllCustomer());
         request.getRequestDispatcher("CustomerBookingConfirm.jsp").forward(request, response);
     }
 
