@@ -104,7 +104,7 @@
                                     for(String booking : bookingId){
                                       int id = Integer.parseInt(booking);
                                     bookingDao.updateBookingStatus(id,"paid");
-                                    bookingDao.updateCodeAndPaidDate(id, null);
+                                    bookingDao.updateCodeAndPaidDate(id, code);
                             }
                                 } else {
                                     out.print("Failed");

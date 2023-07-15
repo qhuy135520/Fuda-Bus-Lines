@@ -216,10 +216,6 @@
         <servlet-name>ExecutePaymentServlet</servlet-name>
         <servlet-class>com.paypal.ExecutePaymentServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>CustomerPaypalPaymentServlet</servlet-name>
-        <servlet-class>controllers.customer.CustomerPaypalPaymentServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>SignUpServlet</servlet-name>
         <url-pattern>/SignUpServlet</url-pattern>
@@ -428,20 +424,16 @@
         <servlet-name>ExecutePaymentServlet</servlet-name>
         <url-pattern>/execute_payment</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CustomerPaypalPaymentServlet</servlet-name>
-        <url-pattern>/CustomerPaypalPaymentServlet</url-pattern>
-    </servlet-mapping>
     <session-config>
         <session-timeout>
             60
         </session-timeout>
     </session-config>
-    <!--    <error-page>
+<!--    <error-page>
         <error-code>404</error-code>
         <location>/ErrorPage404.jsp</location>
     </error-page>-->
-    <!--    <error-page>
+<!--    <error-page>
         <error-code>400</error-code>
         <location>/ErrorPage404.jsp</location>
     </error-page>-->

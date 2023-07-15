@@ -124,8 +124,8 @@ public class RegisterForCustomerServlet extends HttpServlet {
 
         session.setAttribute("page", page);
         request.setAttribute("endPage", endPage);
-        request.setAttribute("orignStation", tripDetail.getTrip().getTripStartingPoint());
-        request.setAttribute("destinationStation", tripDetail.getTrip().getDestination());
+        request.setAttribute("orignStation", tripDetail.getTrip());
+        request.setAttribute("destinationStation", tripDetail.getTrip());
         request.setAttribute("date", tripDetail.getDate().format(formatter));
         request.setAttribute("tripDetailId", tripDetail.getTripDetailId());
         request.setAttribute("listCustomer", listCustomer);

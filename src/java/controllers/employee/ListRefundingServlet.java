@@ -67,14 +67,10 @@ public class ListRefundingServlet extends HttpServlet {
         if (page_raw != null) {
             page = Integer.parseInt(page_raw);
         }
-
         int count = bookingDetailDTODao.getAllBookingDetailHaveRefunding().size();
-
         int endPage = count / 10;
         if (count % 10 != 0) {
             endPage++;
-        } else if (count == 0) {
-            endPage = 1;
         }
         List<BookingDetailDTO> bookingDetailDTOList = bookingDetailDTODao.getAllBookingDetailHaveRefundingWithPagination(page);
         System.out.println(endPage);

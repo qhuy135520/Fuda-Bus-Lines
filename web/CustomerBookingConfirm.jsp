@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="assets/css/customer-booking-confirm-style.css"/>
     </head>
     <body>
-        <div class="loader"></div>
+                  <div class="loader"></div>
 
         <%@include file="includes/navbar.jsp" %>
         <div class="background">
@@ -176,7 +176,7 @@
             </div>
         </div>
         <!--Modal Confirm-->
-        <c:forEach items="${listCustomerFull}" var="customer">
+        <c:forEach items="${listCustomer}" var="customer">
             <div class="modal fade text-center" id="Customer${customer.customerPhone}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">

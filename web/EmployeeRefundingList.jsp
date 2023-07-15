@@ -237,7 +237,7 @@
                             <th>Name</th>
                             <th>Starting Point</th>
                             <th>Destination</th>
-                            <!--<th>Order Code</th>-->
+                            <th>Order Code</th>
                             <th>Paid Date</th>
                             <th>Price</th>
                             <th>Booking Date</th>
@@ -253,7 +253,7 @@
                                 <td>${bookingDetailDTO.booking.customer.customerFirstname} ${bookingDetailDTO.booking.customer.customerLastname}</td>
                                 <td>${bookingDetailDTO.startingPoint}</td>
                                 <td>${bookingDetailDTO.destination}</td>
-                                <!--<td>${bookingDetailDTO.booking.code}</td>-->
+                                <td>${bookingDetailDTO.booking.code}</td>
                                 <td>${bookingDetailDTO.booking.paidDate}</td>
                                 <td>${bookingDetailDTO.price}</td>
                                 <td>${bookingDetailDTO.bookingDate}</td>

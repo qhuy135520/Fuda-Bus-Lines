@@ -139,7 +139,6 @@ public class SecurityUrl implements Filter {
 
         urlCustomer.add("vnpay_ipn.jsp");
         urlCustomer.add("vnpay_pay.jsp");
-        urlCustomer.add("Paypal_pay.jsp");
 
         urlCustomer.add("CancelTicketPaidCustomerServlet");
         urlCustomer.add("CancelTicketPurchaseServlet");
@@ -152,7 +151,6 @@ public class SecurityUrl implements Filter {
         urlCustomer.add("ShowTicketPurchasedServlet");
         urlCustomer.add("TicketPurchaseListAjax");
         urlCustomer.add("TicketPurchaseListServlet");
-        urlCustomer.add("CustomerPaypalPaymentServlet");
         if (customer != null) {
             System.out.println("Customer access: " + customer.getCustomerPhone() + " to: " + url);
         } else {

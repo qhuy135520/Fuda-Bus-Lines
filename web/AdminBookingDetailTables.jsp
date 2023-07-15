@@ -324,7 +324,7 @@
                                                 <th>Booked Date</th>
                                                 <th>Booked Time</th>
                                                 <th>Booked Status</th>
-                                                <!--<th>Order Code</th>-->
+                                                <th>Order Code</th>
                                                 <th>Paid Date</th>
                                                 <th>Price</th>
                                                 <th>Completed Payment</th>
@@ -340,7 +340,7 @@
                                         <th></th>
                                         <th></th>
                                         <th></th>
-                                
+                                        <th></th>
                                         <th>Total Paid:</th>
                                         <th>${totalPrice}</th>
                                         </tfoot>
@@ -357,7 +357,7 @@
                                                     <td>${bookingDetailDTO.booking.bookedDate}</td>
                                                     <td>${bookingDetailDTO.booking.bookedTime}</td>
                                                     <td>${bookingDetailDTO.booking.bookingStatus}</td>
-                                                    <!--<td>${bookingDetailDTO.booking.code}</td>-->
+                                                    <td>${bookingDetailDTO.booking.code}</td>
                                                     <td>${bookingDetailDTO.booking.paidDate}</td>
                                                     <td>${bookingDetailDTO.price}</td>
                                                     <c:if test="${bookingDetailDTO.booking.bookingStatus == 'paid'}">

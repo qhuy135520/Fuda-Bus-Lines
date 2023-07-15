@@ -101,7 +101,7 @@ public class CustomerBookingConfirmAjax extends HttpServlet {
                         + "                                                    <td>" + customer.getCustomerEmail() + "</td>\n"
                         + "                                                    <td>" + customer.getCustomerCreatedDate() + "</td>\n"
                         + "                                                    <td>" + customer.getCustomerBirthdate() + "</td>\n"
-                        + "  <td><button class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#Customer" + customer.getCustomerPhone() + "\">Choose</button></td>"
+                        + "                                                    <td><button class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#Customer" + customer.getCustomerPhone() + "\">Choose</button></td>\n"
                         + "                                                </tr>\n");
 
             }
