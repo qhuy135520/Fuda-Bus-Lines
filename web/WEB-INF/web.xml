@@ -220,6 +220,22 @@
         <servlet-name>CustomerPaypalPaymentServlet</servlet-name>
         <servlet-class>controllers.customer.CustomerPaypalPaymentServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmployeeRejectTicketRefunding</servlet-name>
+        <servlet-class>controllers.employee.EmployeeRejectTicketRefunding</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminCustomerTablesServlet</servlet-name>
+        <servlet-class>controllers.admin.AdminCustomerTablesServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminCustomerTablesAjax</servlet-name>
+        <servlet-class>controllers.admin.AdminCustomerTablesAjax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminEditProfileCustomerServlet</servlet-name>
+        <servlet-class>controllers.admin.AdminEditProfileCustomerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUpServlet</servlet-name>
         <url-pattern>/SignUpServlet</url-pattern>
@@ -431,6 +447,22 @@
     <servlet-mapping>
         <servlet-name>CustomerPaypalPaymentServlet</servlet-name>
         <url-pattern>/CustomerPaypalPaymentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeeRejectTicketRefunding</servlet-name>
+        <url-pattern>/EmployeeRejectTicketRefunding</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminCustomerTablesServlet</servlet-name>
+        <url-pattern>/AdminCustomerTablesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminCustomerTablesAjax</servlet-name>
+        <url-pattern>/AdminCustomerTablesAjax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminEditProfileCustomerServlet</servlet-name>
+        <url-pattern>/AdminEditProfileCustomerServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

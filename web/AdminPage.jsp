@@ -86,7 +86,7 @@
                     >
                 </li>
 
-                 <hr class="sidebar-divider my-0" />
+                <hr class="sidebar-divider my-0" />
 
                 <li class="nav-item ">
                     <a class="nav-link" href="AdminTripTablesServlet">
@@ -94,8 +94,15 @@
                         <span>Trip manage</span></a
                     >
                 </li>
+                <hr class="sidebar-divider my-0" />
+                <li class="nav-item ">
+                    <a class="nav-link" href="AdminCustomerTablesServlet">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Customers Manage</span></a
+                    >
+                </li>
+                <hr class="sidebar-divider my-0" />
 
-               
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block" />
 

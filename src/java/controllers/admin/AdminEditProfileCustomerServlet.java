@@ -4,27 +4,21 @@
  */
 package controllers.admin;
 
-import dal.TripDao;
-import dal.TripDetailDao;
+import dal.CustomerDao;
+import dal.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.TripDetail;
-import model.TripOfBus;
+import model.Customer;
 
 /**
  *
  * @author letra
  */
-public class AdminGenerateTicketServlet extends HttpServlet {
+public class AdminEditProfileCustomerServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +37,10 @@ public class AdminGenerateTicketServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminGenerateTicketServlet</title>");
+            out.println("<title>Servlet AdminEditProfileCustomerServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminGenerateTicketServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminEditProfileCustomerServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -78,44 +72,25 @@ public class AdminGenerateTicketServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        TripDao tripDao = new TripDao();
-        TripDetailDao tripDetailDao = new TripDetailDao();
+        String phone = request.getParameter("phone");
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String email = request.getParameter("email");
+        String birthdate = request.getParameter("birthdate");
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        DAO dao = new DAO();
+        CustomerDao customerDao = new CustomerDao();
 
-        String tripId = request.getParameter("tripId");
-//        String tripDetailId = request.getParameter("tripDetailId");
-        String price_raw = request.getParameter("price");
-        int price = Integer.parseInt(price_raw);
-        String departureTime = request.getParameter("departureTime") + ":00";
-        String departureDate_raw = request.getParameter("departureDate");
-        LocalDate departureDate = LocalDate.parse(departureDate_raw);
-        System.out.println(departureTime);
-        System.out.println(departureDate);
-        TripOfBus tripOfBus = tripDao.getTripOfBusById(tripId);
-//        TripDetail tripDetail = tripDetailDao.getTripDetailById(tripDetailId);
-        boolean isAcceptable = tripDetailDao.isAcceptable(tripOfBus, departureTime, departureDate);
+        Customer customer = dao.getCustomerByEmail(email);
 
-//        if (tripDetail != null) {
-//            request.setAttribute("errorTripId", tripOfBus.getTripId());
-//            request.setAttribute("errorTripDetailExisted", "This Ticket is existed !!");
-//            request.getRequestDispatcher("AdminTripTablesServlet").forward(request, response);
-//} else 
-        if (!isAcceptable) {
-            request.setAttribute("errorBusBusy", "Bus of This Trip is scheduled !!");
-            request.setAttribute("errorTripId", tripOfBus.getTripId());
-            request.getRequestDispatcher("AdminTripTablesServlet").forward(request, response);
+        if (customer != null) {
+            request.setAttribute("emailExisted", "Email is already existed!");
+            request.setAttribute("customerPhone", customer.getCustomerPhone());
+            request.getRequestDispatcher("AdminCustomerTablesServlet").forward(request, response);
         } else {
-            String tripDetailId = tripId + (tripDetailDao.getAllTripDetail().size() + 1);
-            TripDetail tripDetail = new TripDetail(tripDetailId, tripOfBus, departureTime, departureDate, price);
-            try {
-                tripDetailDao.insertTripDetail(tripDetail);
-            } catch (ParseException ex) {
-                Logger.getLogger(AdminGenerateTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            response.sendRedirect("AdminTripTablesServlet");
+            customerDao.updateCustomerInfor(phone, email, firstname, lastname, birthdate);
+            request.getRequestDispatcher("AdminCustomerTablesServlet").forward(request, response);
         }
-
     }
 
     /**

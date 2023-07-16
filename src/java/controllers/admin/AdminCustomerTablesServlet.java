@@ -4,27 +4,22 @@
  */
 package controllers.admin;
 
-import dal.TripDao;
-import dal.TripDetailDao;
+import dal.CustomerDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.TripDetail;
-import model.TripOfBus;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import model.Customer;
 
 /**
  *
  * @author letra
  */
-public class AdminGenerateTicketServlet extends HttpServlet {
+public class AdminCustomerTablesServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +38,10 @@ public class AdminGenerateTicketServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminGenerateTicketServlet</title>");
+            out.println("<title>Servlet AdminCustomerTablesServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminGenerateTicketServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminCustomerTablesServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,7 +59,28 @@ public class AdminGenerateTicketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        CustomerDao customerDao = new CustomerDao();
+        HttpSession session = request.getSession();
+        String page_raw = request.getParameter("page");
 
+        List<Customer> customerListFull = customerDao.getAllCustomer();
+        int page = 1;
+        int count = customerListFull.size();
+        if (page_raw != null) {
+            page = Integer.parseInt(page_raw);
+        }
+        int endPage = count / 10;
+        if (count % 10 != 0) {
+            endPage++;
+        }
+
+        List<Customer> customerList = customerDao.getAllCustomerPagination(page);
+
+        session.setAttribute("page", page);
+        request.setAttribute("endPage", endPage);
+        request.setAttribute("customerList", customerList);
+        request.setAttribute("customerListFull", customerListFull);
+        request.getRequestDispatcher("AdminCustomerTables.jsp").forward(request, response);
     }
 
     /**
@@ -78,44 +94,32 @@ public class AdminGenerateTicketServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        TripDao tripDao = new TripDao();
-        TripDetailDao tripDetailDao = new TripDetailDao();
+        CustomerDao customerDao = new CustomerDao();
+        HttpSession session = request.getSession();
+        String page_raw = request.getParameter("page");
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-
-        String tripId = request.getParameter("tripId");
-//        String tripDetailId = request.getParameter("tripDetailId");
-        String price_raw = request.getParameter("price");
-        int price = Integer.parseInt(price_raw);
-        String departureTime = request.getParameter("departureTime") + ":00";
-        String departureDate_raw = request.getParameter("departureDate");
-        LocalDate departureDate = LocalDate.parse(departureDate_raw);
-        System.out.println(departureTime);
-        System.out.println(departureDate);
-        TripOfBus tripOfBus = tripDao.getTripOfBusById(tripId);
-//        TripDetail tripDetail = tripDetailDao.getTripDetailById(tripDetailId);
-        boolean isAcceptable = tripDetailDao.isAcceptable(tripOfBus, departureTime, departureDate);
-
-//        if (tripDetail != null) {
-//            request.setAttribute("errorTripId", tripOfBus.getTripId());
-//            request.setAttribute("errorTripDetailExisted", "This Ticket is existed !!");
-//            request.getRequestDispatcher("AdminTripTablesServlet").forward(request, response);
-//} else 
-        if (!isAcceptable) {
-            request.setAttribute("errorBusBusy", "Bus of This Trip is scheduled !!");
-            request.setAttribute("errorTripId", tripOfBus.getTripId());
-            request.getRequestDispatcher("AdminTripTablesServlet").forward(request, response);
-        } else {
-            String tripDetailId = tripId + (tripDetailDao.getAllTripDetail().size() + 1);
-            TripDetail tripDetail = new TripDetail(tripDetailId, tripOfBus, departureTime, departureDate, price);
-            try {
-                tripDetailDao.insertTripDetail(tripDetail);
-            } catch (ParseException ex) {
-                Logger.getLogger(AdminGenerateTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            response.sendRedirect("AdminTripTablesServlet");
+        String emailExisted = (String) request.getAttribute("emailExisted");
+        String customerPhone = (String) request.getAttribute("customerPhone");
+        List<Customer> customerListFull = customerDao.getAllCustomer();
+        int page = 1;
+        int count = customerListFull.size();
+        if (page_raw != null) {
+            page = Integer.parseInt(page_raw);
+        }
+        int endPage = count / 10;
+        if (count % 10 != 0) {
+            endPage++;
         }
 
+        List<Customer> customerList = customerDao.getAllCustomerPagination(page);
+
+        session.setAttribute("page", page);
+        request.setAttribute("endPage", endPage);
+        request.setAttribute("customerList", customerList);
+        request.setAttribute("customerListFull", customerListFull);
+        request.setAttribute("emailExisted", emailExisted);
+        request.setAttribute("customerPhone", customerPhone);
+        request.getRequestDispatcher("AdminCustomerTables.jsp").forward(request, response);
     }
 
     /**

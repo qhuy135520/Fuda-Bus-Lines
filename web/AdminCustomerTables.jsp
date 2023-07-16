@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="dal.StationDAO"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,6 +10,7 @@
             />
         <meta name="description" content="" />
         <meta name="author" content="" />
+        <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -39,7 +39,7 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet"
             />
-        <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
         <!-- Custom styles for this template -->
         <link href="assets/css/sb-admin-2.css" rel="stylesheet" />
         <link rel = "icon" href = "https://i.ibb.co/HFrrVg4/bus.png" 
@@ -54,16 +54,9 @@
             src="https://kit.fontawesome.com/84e176b008.js"
             crossorigin="anonymous"
         ></script>
-        <link rel="stylesheet" href="assets/css/admin-table-style.css"/>
     </head>
 
     <body id="page-top">
-        <%
-         StationDAO d = new StationDAO();
-         java.util.ArrayList station = d.getStation();
-         session.setAttribute("station", station);
-        %>
-
         <!-- Page Wrapper -->
         <div id="wrapper">
             <!-- Sidebar -->
@@ -110,14 +103,14 @@
                     >
                 </li>
                 <hr class="sidebar-divider my-0" />
-                <li class="nav-item active">
+                <li class="nav-item ">
                     <a class="nav-link" href="AdminTripTablesServlet">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Trip manage</span></a
                     >
                 </li>
                 <hr class="sidebar-divider my-0" />
-                <li class="nav-item ">
+                <li class="nav-item active">
                     <a class="nav-link" href="AdminCustomerTablesServlet">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Customers Manage</span></a
@@ -125,7 +118,6 @@
                 </li>
                 <hr class="sidebar-divider my-0" />
                 <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block" />
 
                 <!-- Sidebar Toggler (Sidebar) -->
                 <div class="text-center d-none d-md-inline">
@@ -268,11 +260,13 @@
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
                         <!-- Page Heading -->
-                        <h1 class="h3 mb-2 text-gray-800">Trip Tables</h1>
+                        <h1 class="h3 mb-2 text-gray-800">Customer Tables</h1>
                         <p class="mb-4">
-                            Warning: To delete a trip exploited, you should generate report booking of Customer 
+                            DataTables is a third party plugin that is used to generate the
+                            demo table below. For more information about DataTables, please
+                            visit the
                             <a  href="#"
-                                >"Generate Report"</a
+                                >official DataTables documentation</a
                             >.
                         </p>
 
@@ -280,34 +274,27 @@
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">
-                                    Trip Tables
+                                    Customer Tables
                                 </h6>
                             </div>
 
                             <div class="card-body">
-
                                 <div class="table-responsive">
-                                    <!--                                    <div class="search__container">
-                                                                            <p class="search__title">
-                                                                                Search Customer
-                                                                            </p>
-                                                                            <div class="row">
-                                                                                <div class="col-md-8">
-                                                                                    <input id="searchCustomer" class="search__input" type="text" placeholder="Search (Phone)"  >
-                                                                                </div>
-                                                                                <div class="col-md-4">
-                                                                                    <button class="button-56" role="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">Add Employee</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>-->
-                                    <div style="margin-bottom: 20px" class="d-flex justify-content-between align-content-start">
+                                    <div class="search__container ">
 
+                                        <div class="row d-flex justify-content-between w-100">
+                                            <div class="row col-md-6">
+                                                <p style="margin-left: 20%; text-align: left" class="search__title">
+                                                    Search Customer
+                                                </p>
+                                                <div class="col-md-8 ">
 
-                                        <div class="d-flex justify-content-start">
-                                            <div>
-                                                <button  class="button-56" role="button"  data-bs-toggle="modal" data-bs-target="#add-trip">ADD MORE TRIP</button>
+                                                    <input id="searchCustomer" class="search__input" type="text" placeholder="Search (Username)"  >
+                                                </div>
+                                                <div class="col-md-4">
+                                                </div>
                                             </div>
-                                            <div style="margin-top: 8px;margin-left: 30px">
+                                            <div class="col-md-2" style="margin-top: 35px">
                                                 <a
                                                     onclick="ExportToExcel('xlsx')"
                                                     class ="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
@@ -315,53 +302,42 @@
                                                     Report</a
                                                 >
                                             </div>
-
-
                                         </div>
-
                                     </div>
                                     <table
-                                        class="table table-bordered text-center "
+                                        class="table table-bordered "
                                         id="tbl_exporttable_to_xls"
                                         width="100%"
                                         cellspacing="0"
                                         >
                                         <thead>
                                             <tr>
-                                                <th >#</th>
-                                                <th>Trip ID</th>
-                                                <th>Starting point</th>
-                                                <th>Destination</th>
-                                                <th>Total seat</th>
-                                                <th>During (Hours)</th>
-                                                <th>Bus code</th>  
-                                                <th>Show More</th>
-                                                <th>Action</th>
+                                                <th class="text-center">#</th>
+                                                <th class="text-center">Phone</th>
+                                                <th class="text-center">Email</th>
+                                                <th class="text-center">Full name</th>
+                                                <th class="text-center">Birth date</th>
+                                                <th class="text-center">Created date</th>
+                                                <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="tripDetail">
-                                            <c:set value="${0}" var="i"/>
-                                            <c:forEach items="${listTripOfBus}" var="tripOfBus">
-                                                <c:set value="${i+1}" var="i"/>
+
+                                        <tbody id="employeeFound">
+                                            <c:set value="${1}" var="i"/>
+                                            <c:forEach var="customer" items="${customerList}">
+
                                                 <tr>
-                                                    <td>${i}</td>
-                                                    <td>${tripOfBus.tripId}</td>
-                                                    <td>${tripOfBus.tripStartingPoint.stationName}</td>
-                                                    <td>${tripOfBus.destination.stationName}</td>
-                                                    <td>${tripOfBus.totalSeat}</td>
-                                                    <td>${tripOfBus.during}</td>
-                                                    <td>${tripOfBus.busCode}</td>
-                                                    <td>
-                                                        <button onclick="window.location = 'AdminTripExploitedTablesServlet?tripId=${tripOfBus.tripId}'" type="button" class="btn btn-primary w-100">
-                                                            Trip Detail
-                                                        </button>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#generate${tripOfBus.tripId}">
-                                                            Generate Ticket
-                                                        </button>
-                                                    </td>
+                                                    <td class="text-center">${i}</td>
+                                                    <td class="text-center">${customer.customerPhone}</td>
+                                                    <td class="text-center">${customer.customerEmail}</td>
+                                                    <td class="text-center">${customer.customerFirstname} ${customer.customerLastname}</td>
+                                                    <td class="text-center">${customer.customerBirthdate}</td>
+                                                    <td class="text-center">${customer.customerCreatedDate}</td>
+                                                    <td class="text-center"><button type="button" class="btn btn-info w-100"  data-bs-toggle="modal" data-bs-target="#customer${customer.customerPhone}">Edit Profile</button></td>
                                                 </tr>
+
+
+                                                <c:set value="${i+1}" var="i"/>
                                             </c:forEach>
                                         </tbody>
                                     </table>
@@ -371,36 +347,36 @@
                                             <!--Previous Page-->
                                             <c:if test="${page != 1}">
                                                 <li class="page-item">
-                                                    <a class="page-link" href="AdminTripTablesServlet?page=${page-1}">Previous</a>
+                                                    <a class="page-link" href="AdminCustomerTablesServlet?page=${page-1}">Previous</a>
                                                 </li>
                                             </c:if>
                                             <c:if test="${page == 1}">
                                                 <li class="page-item disabled">
-                                                    <a class="page-link" href="AdminTripTablesServlet?page=${page-1}">Previous</a>
+                                                    <a class="page-link" href="AdminCustomerTablesServlet?page=${page-1}">Previous</a>
                                                 </li>
                                             </c:if>
 
                                             <c:forEach var="i" begin="1" end="${endPage}">
                                                 <c:if test="${page == i}">
                                                     <li class="page-item active">
-                                                        <a class="page-link" href="AdminTripTablesServlet?page=${i}">${i}</a>
+                                                        <a class="page-link" href="AdminCustomerTablesServlet?page=${i}">${i}</a>
                                                     </li>
                                                 </c:if>
                                                 <c:if test="${page != i}">
                                                     <li class="page-item ">
-                                                        <a class="page-link" href="AdminTripTablesServlet?page=${i}">${i}</a>
+                                                        <a class="page-link" href="AdminCustomerTablesServlet?page=${i}">${i}</a>
                                                     </li>
                                                 </c:if>
                                             </c:forEach>
                                             <!--Next Page-->
                                             <c:if test="${endPage != page}">
                                                 <li class="page-item">
-                                                    <a class="page-link" href="AdminTripTablesServlet?page=${page+1}">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</a>
+                                                    <a class="page-link" href="AdminCustomerTablesServlet?page=${page+1}">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</a>
                                                 </li>
                                             </c:if>
                                             <c:if test="${endPage == page}">
                                                 <li class="page-item disabled">
-                                                    <a class="page-link" href="AdminTripTablesServlet?page=${page+1}">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</a>
+                                                    <a class="page-link" href="AdminCustomerTablesServlet?page=${page+1}">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</a>
                                                 </li>
                                             </c:if>
                                             <!-- -->
@@ -413,77 +389,8 @@
                     <!-- /.container-fluid -->
                 </div>
                 <!-- End of Main Content -->
-                <div class="modal fade" id="add-trip" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-body" style="padding: 0;">
-                                <div class="wrapper" >
-                                    <div class="row">
-                                        <div class="col-md-6 background-register-booking"></div>
-                                        <div class="col-md-6">
-                                            <div class="inner">
-                                                <form action="AdminAddTripServlet" method="POST">
-                                                    <h3 style="margin-bottom: 10px">Add More Trip</h3>
-                                                    <h4 class="text-center" style="color: red;padding-bottom: 15px">${errorExisted}</h4>
-                                                    <h5 class="text-center" style="color: red;padding-bottom: 15px">${errorStation}</h4>
-                                                        <h4 class="text-center" style="color: red;padding-bottom: 15px">${errorIdMaxLength}</h4>
-
-                                                        <div class="form-wrapper row">
-                                                            <div class="col-md-6">
-                                                                <label for="">Trip ID</label>
-                                                                <input type="text" name="tripId" class="form-control" required>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label for="">Bus Code</label>
-                                                                <input type="text"  name="busCode" class="form-control" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-wrapper row">
-                                                            <div class="col-md-6 ">
-                                                                <label for="">Starting point</label>
-                                                                <select class="form-select form-control"  name="startingPoint" required>
-                                                                    <option hidden="" selected="" value="">Starting Point</option>
-                                                                    <c:forEach items="${sessionScope.station}" var="station">
-                                                                        <option value="${station.stationId}">${station.stationName}</option>
-                                                                    </c:forEach>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label for="">Destination</label>
-                                                                <select class="form-select form-control" name="destination" required>
-                                                                    <option hidden="" selected="" value="">Destination</option>
-                                                                    <c:forEach items="${sessionScope.station}" var="station">
-                                                                        <option value="${station.stationId}">${station.stationName}</option>
-                                                                    </c:forEach>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-wrapper row">
-                                                            <div class="col-md-6">
-                                                                <label>Kind of seat</label>
-                                                                <select class="form-select form-control" name="seats" required="">
-                                                                    <option hidden selected="" value="">Total seats</option>
-                                                                    <option value="36">36 Seats</option>
-                                                                    <option value="24">24 Seats</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label>Duration</label>
-                                                                <input class="form-control" min="0" type="number" name="during" placeholder="During" required=""/>
-                                                            </div>
-                                                        </div>
-                                                        <button type="submit">Add Now</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <c:forEach items="${listTripOfBus}" var="tripOfBus">
-                    <div class="modal fade" id="generate${tripOfBus.tripId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <c:forEach items="${customerListFull}" var="customer">
+                    <div class="modal fade" id="customer${customer.customerPhone}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg">
                             <div class="modal-content">
                                 <div class="modal-body" style="padding: 0;">
@@ -492,33 +399,41 @@
                                             <div class="col-md-6 background-register-booking"></div>
                                             <div class="col-md-6">
                                                 <div class="inner">
-                                                    <form action="AdminGenerateTicketServlet" method="POST">
-                                                        <h3 style="margin-bottom: 10px">Generate Ticket</h3>
-                                                        <h4 class="text-center" style="padding-bottom: 15px">${tripOfBus.tripStartingPoint.stationName} - ${tripOfBus.destination.stationName}</h4>
-                                                        <h4 class="text-center" style="color: red;padding-bottom: 15px">${errorTripDetailExisted}</h4>
-                                                        <h4 class="text-center" style="color: red;padding-bottom: 15px">${errorBusBusy}</h4>
-                                                        <div class="form-wrapper row">
-                                                            <!--                                                            <div class="col-md-6">
-                                                                                                                            <label for="">Trip Detail ID</label>
-                                                                                                                            <input type="text" name="tripDetailId" class="form-control" required>
-                                                                                                                        </div>-->
-                                                            <div class="col-md-12">
-                                                                <label for="">Price</label>
-                                                                <input type="number" min="100000" max="1000000"  name="price" class="form-control" required>
+                                                    <form action="AdminEditProfileCustomerServlet" method="POST">
+                                                        <h3 style="margin-bottom: 10px">Edit Profile</h3>
+                                                        <h4 class="text-center" style="color: red;padding-bottom: 15px">${emailExisted}</h4>
+                                                        <div class="form-wrapper">
+                                                            <label for="">Phone</label>
+                                                            <input type="text" readonly="" name="phone" class="form-control" required value="${customer.customerPhone}">
+                                                        </div>
+                                                        <div class="form-wrapper">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <label for="">First name</label>
+                                                                    <input type="text" name="firstname" class="form-control" required value="${customer.customerFirstname}">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="">Last name</label>
+                                                                    <input type="text" id="lastname" name="lastname" class="form-control" required value="${customer.customerLastname}">
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-wrapper row">
-                                                            <div class="col-md-6 ">
-                                                                <label for="">Departure Time</label>
-                                                                <input  class="form-control" type="time" name="departureTime" required/>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <label for="">Departure Date</label>
-                                                                <input class="form-control departureDate" id="departureDate${tripOfBus.tripId}" type="date" name="departureDate" required />
+                                                        <div class="form-wrapper">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label for="">Email</label>
+                                                                    <input type="text" name="email" class="form-control" required value="${customer.customerEmail}">
+                                                                </div>
+
                                                             </div>
                                                         </div>
-                                                        <input name="tripId" value="${tripOfBus.tripId}" style="display: none"/>
-                                                        <button type="submit">Generate Now</button>
+
+                                                        <div class="form-wrapper">
+                                                            <label for="">Birth Date</label>
+                                                            <input type="date" id="confirm_password" name="birthdate" class="form-control" ${customer.customerBirthdate} required>
+                                                        </div>
+
+                                                        <button type="submit">Edit now</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -529,6 +444,7 @@
                             </div>
                         </div>
                     </div>
+                   
                 </c:forEach>
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
@@ -588,6 +504,7 @@
             </div>
         </div>
 
+
         <!-- Bootstrap core JavaScript-->
         <script src="assets/vendor/jquery/jquery.min.js"></script>
         <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -604,60 +521,57 @@
 
         <!-- Page level custom scripts -->
         <script src="assets/js/demo/datatables-demo.js"></script>
-        <!--        <script type="text/javascript">
-                                            document.getElementById("searchCustomer").addEventListener('input', function () {
-                                                var usernameSearch = document.getElementById("searchCustomer").value;
-                                                $.ajax({
-                                                    url: 'AdminEmployeeTablesAjax',
-                                                    type: 'POST',
-                                                    data: {
-                                                        usernameCustomer: usernameSearch,
-                                                    },
-                                                    success: function (data) {
-                                                        var row = document.getElementById('employeeFound');
-                                                        row.innerHTML = data;
-                                                    },
-                                                    error: function (jqXHR, textStatus, errorThrown) {
-        
-                                                    }
-                                                }
-                                                );
-                                            }
-                                            );
-                </script>-->
-        <script>
-                                                            function ExportToExcel(type, fn, dl) {
-                                                                var elt = document.getElementById('tbl_exporttable_to_xls');
-                                                                var wb = XLSX.utils.table_to_book(elt, {sheet: "sheet1"});
-                                                                return dl ?
-                                                                        XLSX.write(wb, {bookType: type, bookSST: true, type: 'base64'}) :
-                                                                        XLSX.writeFile(wb, fn || ('AdminTripTables.' + (type || 'xlsx')));
+        <script type="text/javascript">
+                                                        document.getElementById("searchCustomer").addEventListener('input', function () {
+                                                            var usernameSearch = document.getElementById("searchCustomer").value;
+                                                            $.ajax({
+                                                                url: 'AdminCustomerTablesAjax',
+                                                                type: 'POST',
+                                                                data: {
+                                                                    usernameCustomer: usernameSearch,
+                                                                },
+                                                                success: function (data) {
+                                                                    var row = document.getElementById('employeeFound');
+                                                                    row.innerHTML = data;
+                                                                },
+                                                                error: function (jqXHR, textStatus, errorThrown) {
+
+                                                                }
                                                             }
+                                                            );
+                                                        }
+                                                        );
         </script>
-        <c:forEach items="${listTripOfBus}" var="tripOfBus">
-            <script type="text/javascript">
-                window.onload = function () {
-                    var today = new Date().toISOString().split('T')[0];
-                    document.getElementById("departureDate${tripOfBus.tripId}")[0].setAttribute('min', today);
+        <script type="text/javascript">
+            var password = document.getElementById("password")
+                    , confirm_password = document.getElementById("confirm_password");
 
-                };
-            </script>
-        </c:forEach>
-        <c:if test="${errorExisted != null or errorStation != null or errorIdMaxLength!= null}">
+            function validatePassword() {
+                if (password.value !== confirm_password.value) {
+                    confirm_password.setCustomValidity("Passwords Don't Match");
+                } else {
+                    confirm_password.setCustomValidity('');
+                }
+            }
+
+            password.onchange = validatePassword;
+            confirm_password.onkeyup = validatePassword;
+        </script>
+        <c:if test="${emailExisted != null}">
             <script type="text/javascript">
                 $(window).on('load', function () {
-                    $('#add-trip').modal('show');
+                    $('#customer${customerPhone}').modal('show');
                 });
             </script>
         </c:if>
-        <c:if test="${errorTripDetailExisted != null or errorBusBusy != null}">
-            <script type="text/javascript">
-                $(window).on('load', function () {
-                    $('#generate${errorTripId}').modal('show');
-                });
-            </script>
-        </c:if>
-
-
+        <script>
+            function ExportToExcel(type, fn, dl) {
+                var elt = document.getElementById('tbl_exporttable_to_xls');
+                var wb = XLSX.utils.table_to_book(elt, {sheet: "sheet1"});
+                return dl ?
+                        XLSX.write(wb, {bookType: type, bookSST: true, type: 'base64'}) :
+                        XLSX.writeFile(wb, fn || ('AdminEmployeeTables.' + (type || 'xlsx')));
+            }
+        </script>
     </body>
 </html>

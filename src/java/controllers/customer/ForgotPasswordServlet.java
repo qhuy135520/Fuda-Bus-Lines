@@ -99,7 +99,7 @@ public class ForgotPasswordServlet extends HttpServlet {
         if (c != null) {
             session.setAttribute("randomCode", randomCode);
             session.setAttribute("customerReset", c);
-            System.out.println(c.getCustomerPhone());
+
             try {
                 s.resetPassword(randomCode, email);
             } catch (MessagingException ex) {

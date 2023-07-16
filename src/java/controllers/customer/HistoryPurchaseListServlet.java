@@ -110,7 +110,7 @@ public class HistoryPurchaseListServlet extends HttpServlet {
             try {
                 int checkDateDiff = find(fomatter.format(date), fomatter.format(bookingDetailDTO.getBooking().getTripSeatDetail().getTripDetail().getDate()));
 //                request.setAttribute("checkDateDiff" + i, checkDateDiff);
-                System.out.println(checkDateDiff);
+   
 
                 dateDiffMap.put(i, checkDateDiff);
             } catch (ParseException ex) {

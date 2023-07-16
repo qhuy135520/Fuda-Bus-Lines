@@ -179,6 +179,7 @@ public class SecurityUrl implements Filter {
         urlEmployee.add("ShowBookedCustomerConfirmServlet");
         urlEmployee.add("EmployeeRefundCustomerServlet");
         urlEmployee.add("EmployeeCancelTicketRefunding");
+        urlEmployee.add("EmployeeRejectTicketRefunding");
 //      
 //      the link that is only accessible to admin
 
@@ -187,6 +188,7 @@ public class SecurityUrl implements Filter {
         urlAdmin.add("AdminTripTables.jsp");
         urlAdmin.add("AdminBookingDetailTables.jsp");
         urlAdmin.add("AdminTripExploitedTables.jsp");
+        urlAdmin.add("AdminCustomerTables.jsp");
 
         urlAdmin.add("AdminAddTripServlet");
         urlAdmin.add("AdminBookingDetailTablesServlet");
@@ -200,6 +202,7 @@ public class SecurityUrl implements Filter {
         urlAdmin.add("AdminTripTablesServlet");
         urlAdmin.add("AdminTripExploitedTablesServlet");
         urlAdmin.add("AdminGenerateTicketServlet");
+        urlAdmin.add("AdminCustomerTablesServlet");
 
 //        Check Url of Employee
         if (employee == null) {

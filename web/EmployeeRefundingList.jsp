@@ -263,7 +263,10 @@
                                     <td><button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#refund${bookingDetailDTO.booking.bookingId}">Refund</button></td>
                                 </c:if>
                                 <c:if test="${bookingDetailDTO.booking.code == null}">
-                                    <td><button  type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#refund${bookingDetailDTO.booking.bookingId}">Cancel</button></td>
+                                    <td>
+                                        <button  type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#reject${bookingDetailDTO.booking.bookingId}">Reject</button>
+                                        <button  type="button" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#refund${bookingDetailDTO.booking.bookingId}">Accept</button>
+                                    </td>
                                 </c:if>
                             </tr>
 
@@ -273,7 +276,6 @@
                             <c:forEach begin="${countTr}" end="10">
                                 <tr>
                                     <td>&nbsp;</td>
-                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -364,7 +366,24 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-danger" onclick="window.location = 'EmployeeCancelTicketRefunding?bookingId=${bookingDetailDTO.booking.bookingId}'">Cancel</button>
+                                            <button type="button" class="btn btn-danger" onclick="window.location = 'EmployeeCancelTicketRefunding?bookingId=${bookingDetailDTO.booking.bookingId}'">Approve</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="reject${bookingDetailDTO.booking.bookingId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Make sure you want to "<span style="color: red">Reject</span>" for this customer "<span style="color: red">${bookingDetailDTO.booking.customer.customerFirstname} ${bookingDetailDTO.booking.customer.customerLastname}</span>"
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-success" onclick="window.location = 'EmployeeRejectTicketRefunding?bookingId=${bookingDetailDTO.booking.bookingId}'">Reject</button>
                                         </div>
                                     </div>
                                 </div>

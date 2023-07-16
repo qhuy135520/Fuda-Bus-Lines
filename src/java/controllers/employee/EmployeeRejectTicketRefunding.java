@@ -2,24 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.customer;
+package controllers.employee;
 
-import controllers.MD5;
-import dal.DAO;
+import dal.BookingDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Customer;
 
 /**
  *
  * @author letra
  */
-public class SetPasswordServlet extends HttpServlet {
+public class EmployeeRejectTicketRefunding extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -27,8 +24,7 @@ public class SetPasswordServlet extends HttpServlet {
      *
      * @param request servlet request
      * @param response servlet response
-  
-  * @throws ServletException if a servlet-specific error occurs
+     * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -39,10 +35,10 @@ public class SetPasswordServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SetPasswordServlet</title>");
+            out.println("<title>Servlet EmployeeRejectTicketRefunding</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SetPasswordServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet EmployeeRejectTicketRefunding at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,7 +56,12 @@ public class SetPasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        BookingDao bookingDao = new BookingDao();
+
+        int bookingId = Integer.parseInt(request.getParameter("bookingId"));
+
+        bookingDao.updateBookingStatus(bookingId, "paid");
+        response.sendRedirect("ListRefundingServlet");
     }
 
     /**
@@ -74,17 +75,7 @@ public class SetPasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAO d = new DAO();
-        MD5 m = new MD5();
-        HttpSession session = request.getSession();
-        String password_raw = request.getParameter("password");
-        String confirmPassword = request.getParameter("confirmPassword");
-        Customer c = (Customer) session.getAttribute("customerReset");
-        if (password_raw.equals(confirmPassword)) {
-            String password = m.md5(password_raw);
-            d.updateCustomerPassword(c, password);
-            response.sendRedirect("ChangePasswordSuccess.jsp");
-        }
+        processRequest(request, response);
     }
 
     /**

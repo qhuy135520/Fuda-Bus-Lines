@@ -123,8 +123,7 @@ public class TakeSeatServlet extends HttpServlet {
             if (count % 5 != 0) {
                 endPage++;
             }
-            System.out.println(endPage);
-            System.out.println(page);
+
 
             List<Customer> listCustomer = customerDao.getAllCustomerPagination(page);
             List<Customer> listCustomerFull = customerDao.getAllCustomer();

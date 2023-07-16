@@ -147,6 +147,26 @@ public class CustomerDao extends DBContext {
         }
     }
 
+    public void updateCustomerInfor(String phone, String email, String firstname, String lastname, String birthdate) {
+        String sql = "UPDATE [dbo].[customer]\n"
+                + "   SET [c_first_name] = ?\n"
+                + "      ,[c_last_name] = ?\n"
+                + "      ,[c_birth_date] = ?\n"
+                + "       ,[c_email] = ?\n"
+                + " WHERE [c_phone] = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, firstname);
+            st.setString(2, lastname);
+            st.setString(3, birthdate);
+            st.setString(4, email);
+            st.setString(5, phone);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
     public void updateCustomerUrlImage(String path, String phone) {
         String sql = "UPDATE [dbo].[customer]\n"
                 + "   SET [c_url_img] = ?\n"

@@ -142,8 +142,7 @@ public class SearchTripServlet extends HttpServlet {
         List<TripDetail> listTripDetail = tdd.getTripDetailByStartingPointAndDestinationAndDate(orign, destination, departureDateInput, price);
         Station orignStation = sd.getStationByStationID(orign);
         Station destinationStation = sd.getStationByStationID(destination);
-        System.out.println(orignStation.getStationUrl());
-        System.out.println(destinationStation.getStationUrl());
+
         if (!listTripDetail.isEmpty()) {
             request.setAttribute("departureDate", departureDateInput.format(formatter));
             request.setAttribute("orignStation", orignStation);

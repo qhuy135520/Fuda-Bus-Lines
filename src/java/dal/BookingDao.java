@@ -202,7 +202,7 @@ public class BookingDao extends DBContext {
             pst.executeUpdate();
 
             // update status cua ve trong trip_seat_detail = true
-            if (status.equals("canceled") || status.equals("refunding")) {
+            if (status.equals("canceled")) {
                 TripSeatDao tripSeatDao = new TripSeatDao();
                 tripSeatDao.updateStatusById(getBookingById(bookingId).getTripSeatDetail().getTripSeatId(), true);
             }
@@ -276,8 +276,6 @@ public class BookingDao extends DBContext {
         }
     }
 
-   
-    
     public static void main(String[] args) throws ParseException {
         LocalDate date = LocalDate.now();
 //        BookingDao bookingDao = new BookingDao();
@@ -290,6 +288,6 @@ public class BookingDao extends DBContext {
 //        }
 //        System.out.println(revenueThisMonth);
         System.out.println(find("2023-07-10", "2023-07-09"));
-        
+
     }
 }
