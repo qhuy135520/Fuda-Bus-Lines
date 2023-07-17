@@ -246,7 +246,7 @@
                             <th>Price</th>
                             <th>Booking Date</th>
                             <th>Booking Status</th>
-                            <th>Action</th>
+                            <th colspan="2">Action</th>
                         </tr>
                         <c:set var="countTr" value="1"/>
                         <c:set var="i" value="0"/>
@@ -267,62 +267,64 @@
                                 <td>${bookingDetailDTO.bookingStatus}</td>
                                 <c:if test="${bookingDetailDTO.bookingStatus=='paid'}">
                                     <td>
-                                        <button onclick="window.location = 'ShowTicketPurchasedServlet?bookingId=${bookingDetailDTO.booking.bookingId}'" type="button" class="btn btn-success w-50">See Ticket</button>
-                                        <c:forEach items="${dateDiffMap}" var="dateDiffMap">
-                                            <c:if test="${i == dateDiffMap.key}">
-                                                <c:if test="${dateDiffMap.value > 0}">
-                                                    <button  type="button" class="btn btn-danger w-50" data-bs-toggle="modal" data-bs-target="#CancelModal${bookingDetailDTO.booking.bookingId}">Cancel</button>
+                                        <button onclick="window.location = 'ShowTicketPurchasedServlet?bookingId=${bookingDetailDTO.booking.bookingId}'" type="button" class="btn btn-success">See Ticket</button>
+                                    </td>
+
+                                    <c:forEach items="${dateDiffMap}" var="dateDiffMap">
+                                        <c:if test="${i == dateDiffMap.key}">
+                                            <c:if test="${dateDiffMap.value > 0}">
+                                                <td>  <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#CancelModal${bookingDetailDTO.booking.bookingId}">Cancel</button>
+
                                                 </c:if>
                                                 <c:if test="${dateDiffMap.value < 1}">
-                                                    <button disabled="" type="button" class="btn btn-danger w-50" data-bs-toggle="modal" data-bs-target="#CancelModal${bookingDetailDTO.booking.bookingId}">Cancel</button>
-                                                </c:if> 
-                                            </c:if>
-                                        </c:forEach>
+                                                <td>  <button disabled="" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#CancelModal${bookingDetailDTO.booking.bookingId}">Cancel</button></td>
+                                            </c:if> 
+                                        </c:if>
+                                    </c:forEach>
 
-                                        <div class="modal fade" id="CancelModal${bookingDetailDTO.booking.bookingId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Cancel ticket</h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Are you sure to cancel Ticket ?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button onclick="window.location = 'CancelTicketPaidCustomerServlet?bookingId=${bookingDetailDTO.booking.bookingId}&pageHistory=HistoryPurchase.jsp'" type="button" class="btn btn-danger">Agree</button>
-                                                    </div>
+                                <div class="modal fade" id="CancelModal${bookingDetailDTO.booking.bookingId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Cancel ticket</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure to cancel Ticket ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button onclick="window.location = 'CancelTicketPaidCustomerServlet?bookingId=${bookingDetailDTO.booking.bookingId}&pageHistory=HistoryPurchase.jsp'" type="button" class="btn btn-danger">Agree</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
+                            <c:if test="${bookingDetailDTO.bookingStatus=='canceled'}">
+                                <td></td>
+                            </c:if>
+                            <c:if test="${bookingDetailDTO.bookingStatus =='order'}">
+                                <td>
+                                    <button  type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#CancelModal${bookingDetailDTO.booking.bookingId}">Cancel</button>
+                                    <div class="modal fade" id="CancelModal${bookingDetailDTO.booking.bookingId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cancel ticket</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure to cancel Ticket ?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button onclick="window.location = 'CancelTicketPurchaseServlet?bookingId=${bookingDetailDTO.booking.bookingId}&pageHistory=HistoryPurchase.jsp'" type="button" class="btn btn-danger">Agree</button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
-                                </c:if>
-                                <c:if test="${bookingDetailDTO.bookingStatus=='canceled'}">
-                                    <td></td>
-                                </c:if>
-                                <c:if test="${bookingDetailDTO.bookingStatus =='order'}">
-                                    <td>
-                                        <button  type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#CancelModal${bookingDetailDTO.booking.bookingId}">Cancel</button>
-                                        <div class="modal fade" id="CancelModal${bookingDetailDTO.booking.bookingId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Cancel ticket</h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Are you sure to cancel Ticket ?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button onclick="window.location = 'CancelTicketPurchaseServlet?bookingId=${bookingDetailDTO.booking.bookingId}&pageHistory=HistoryPurchase.jsp'" type="button" class="btn btn-danger">Agree</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </c:if>
+                                    </div>
+                                </td>
+                            </c:if>
                             </tr>
 
                         </c:forEach>

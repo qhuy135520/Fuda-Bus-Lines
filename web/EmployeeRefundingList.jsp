@@ -242,7 +242,7 @@
                             <th>Price</th>
                             <th>Booking Date</th>
                             <th>Booking Status</th>
-                            <th>Action</th>
+                            <th colspan="2">Action</th>
                         </tr>
                         <c:set var="countTr" value="1"/>
                         <c:forEach items="${bookingDetailDTOList}" var="bookingDetailDTO">
@@ -264,8 +264,10 @@
                                 </c:if>
                                 <c:if test="${bookingDetailDTO.booking.code == null}">
                                     <td>
-                                        <button  type="button" class="btn btn-success w-50" data-bs-toggle="modal" data-bs-target="#reject${bookingDetailDTO.booking.bookingId}">Reject</button>
-                                        <button  type="button" class="btn btn-danger w-50" data-bs-toggle="modal" data-bs-target="#refund${bookingDetailDTO.booking.bookingId}">Accept</button>
+                                        <button  type="button" class="btn btn-success w-100 " data-bs-toggle="modal" data-bs-target="#reject${bookingDetailDTO.booking.bookingId}">Reject</button>
+                                    </td>
+                                    <td>
+                                        <button  type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#refund${bookingDetailDTO.booking.bookingId}">Accept</button>
                                     </td>
                                 </c:if>
                             </tr>
@@ -276,6 +278,7 @@
                             <c:forEach begin="${countTr}" end="10">
                                 <tr>
                                     <td>&nbsp;</td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
