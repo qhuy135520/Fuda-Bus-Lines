@@ -264,8 +264,8 @@
                                 </c:if>
                                 <c:if test="${bookingDetailDTO.booking.code == null}">
                                     <td>
-                                        <button  type="button" class="btn btn-success " data-bs-toggle="modal" data-bs-target="#reject${bookingDetailDTO.booking.bookingId}">Reject</button>
-                                        <button  type="button" class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#refund${bookingDetailDTO.booking.bookingId}">Accept</button>
+                                        <button  type="button" class="btn btn-success w-50" data-bs-toggle="modal" data-bs-target="#reject${bookingDetailDTO.booking.bookingId}">Reject</button>
+                                        <button  type="button" class="btn btn-danger w-50" data-bs-toggle="modal" data-bs-target="#refund${bookingDetailDTO.booking.bookingId}">Accept</button>
                                     </td>
                                 </c:if>
                             </tr>

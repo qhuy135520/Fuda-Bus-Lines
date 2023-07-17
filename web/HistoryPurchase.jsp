@@ -267,14 +267,14 @@
                                 <td>${bookingDetailDTO.bookingStatus}</td>
                                 <c:if test="${bookingDetailDTO.bookingStatus=='paid'}">
                                     <td>
-                                        <button onclick="window.location = 'ShowTicketPurchasedServlet?bookingId=${bookingDetailDTO.booking.bookingId}'" type="button" class="btn btn-success">See Ticket</button>
+                                        <button onclick="window.location = 'ShowTicketPurchasedServlet?bookingId=${bookingDetailDTO.booking.bookingId}'" type="button" class="btn btn-success w-50">See Ticket</button>
                                         <c:forEach items="${dateDiffMap}" var="dateDiffMap">
                                             <c:if test="${i == dateDiffMap.key}">
                                                 <c:if test="${dateDiffMap.value > 0}">
-                                                    <button  type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#CancelModal${bookingDetailDTO.booking.bookingId}">Cancel</button>
+                                                    <button  type="button" class="btn btn-danger w-50" data-bs-toggle="modal" data-bs-target="#CancelModal${bookingDetailDTO.booking.bookingId}">Cancel</button>
                                                 </c:if>
                                                 <c:if test="${dateDiffMap.value < 1}">
-                                                    <button disabled="" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#CancelModal${bookingDetailDTO.booking.bookingId}">Cancel</button>
+                                                    <button disabled="" type="button" class="btn btn-danger w-50" data-bs-toggle="modal" data-bs-target="#CancelModal${bookingDetailDTO.booking.bookingId}">Cancel</button>
                                                 </c:if> 
                                             </c:if>
                                         </c:forEach>
