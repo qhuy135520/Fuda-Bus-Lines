@@ -83,7 +83,7 @@ public class AdminRegisterEmployeeServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(username);
+  
         EmployeeAccount employee = employeeDao.getEmployeeAccountByUsername(username);
         Customer customer = customerDao.getCustomerByPhone(username);
         if (employee != null || customer != null) {

@@ -82,10 +82,10 @@ public class AdminEditProfileCustomerServlet extends HttpServlet {
         CustomerDao customerDao = new CustomerDao();
 
         Customer customer = dao.getCustomerByEmail(email);
-
-        if (customer != null) {
+        Customer customerPhone = dao.getCustomerByPhone(phone);
+        if (customer != null && !customerPhone.getCustomerEmail().equals(email)) {
             request.setAttribute("emailExisted", "Email is already existed!");
-            request.setAttribute("customerPhone", customer.getCustomerPhone());
+            request.setAttribute("customerPhone", phone);
             request.getRequestDispatcher("AdminCustomerTablesServlet").forward(request, response);
         } else {
             customerDao.updateCustomerInfor(phone, email, firstname, lastname, birthdate);
