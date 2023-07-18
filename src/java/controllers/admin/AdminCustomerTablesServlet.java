@@ -69,8 +69,8 @@ public class AdminCustomerTablesServlet extends HttpServlet {
         if (page_raw != null) {
             page = Integer.parseInt(page_raw);
         }
-        int endPage = count / 10;
-        if (count % 10 != 0) {
+        int endPage = count / 5;
+        if (count % 5 != 0) {
             endPage++;
         }
 

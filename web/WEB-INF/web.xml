@@ -122,7 +122,7 @@
     </servlet>
     <servlet>
         <servlet-name>CustomerBookingConfirmServlet</servlet-name>
-        <servlet-class>controllers.CustomerBookingConfirmServlet</servlet-class>
+        <servlet-class>controllers.customer.CustomerBookingConfirmServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>BookingForCustomerServlet</servlet-name>
@@ -130,7 +130,7 @@
     </servlet>
     <servlet>
         <servlet-name>CustomerBookingConfirmAjax</servlet-name>
-        <servlet-class>controllers.CustomerBookingConfirmAjax</servlet-class>
+        <servlet-class>controllers.customer.CustomerBookingConfirmAjax</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegisterForCustomerServlet</servlet-name>

@@ -289,7 +289,7 @@
                                                 </p>
                                                 <div class="col-md-8 ">
 
-                                                    <input id="searchCustomer" class="search__input" type="text" placeholder="Search (Username)"  >
+                                                    <input id="searchCustomer" class="search__input" type="text" placeholder="Search (Phone)"  >
                                                 </div>
                                                 <div class="col-md-4">
                                                 </div>
@@ -322,7 +322,7 @@
                                             </tr>
                                         </thead>
 
-                                        <tbody id="employeeFound">
+                                        <tbody id="customerFound">
                                             <c:set value="${1}" var="i"/>
                                             <c:forEach var="customer" items="${customerList}">
 
@@ -531,7 +531,7 @@
                                                                     usernameCustomer: usernameSearch,
                                                                 },
                                                                 success: function (data) {
-                                                                    var row = document.getElementById('employeeFound');
+                                                                    var row = document.getElementById('customerFound');
                                                                     row.innerHTML = data;
                                                                 },
                                                                 error: function (jqXHR, textStatus, errorThrown) {

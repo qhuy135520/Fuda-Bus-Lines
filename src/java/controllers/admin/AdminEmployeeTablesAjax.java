@@ -81,10 +81,12 @@ public class AdminEmployeeTablesAjax extends HttpServlet {
         String usernameCustomer = request.getParameter("usernameCustomer");
 
         List<EmployeeAccount> listEmployeeFound;
-        if (usernameCustomer != null || usernameCustomer.equals("")) {
-            listEmployeeFound = employeeDao.searchEmployeeRole2(usernameCustomer);
-        } else {
+        if (usernameCustomer == null || usernameCustomer.equals("")) {
             listEmployeeFound = employeeDao.getAllEmployeeRole2Pagination(page);
+
+        } else {
+            listEmployeeFound = employeeDao.searchEmployeeRole2(usernameCustomer);
+
         }
 
         PrintWriter out = response.getWriter();
