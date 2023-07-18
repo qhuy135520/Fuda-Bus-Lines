@@ -2,23 +2,29 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.admin;
+package controllers;
 
 import dal.CustomerDao;
-import dal.DAO;
+import dal.StationDAO;
+import dal.TripDetailDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import model.Customer;
+import model.Station;
+import model.TripDetail;
 
 /**
  *
  * @author letra
  */
-public class AdminEditProfileCustomerServlet extends HttpServlet {
+public class CustomerBookingConfirmServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +43,10 @@ public class AdminEditProfileCustomerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminEditProfileCustomerServlet</title>");
+            out.println("<title>Servlet CustomerBookingConfirmServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminEditProfileCustomerServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CustomerBookingConfirmServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +64,38 @@ public class AdminEditProfileCustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        HttpSession session = request.getSession();
+//        DAO
+        TripDetailDao tripDetailDao = new TripDetailDao();
+        StationDAO staionDao = new StationDAO();
+        CustomerDao customerDao = new CustomerDao();
 
+        String page_raw = request.getParameter("page");
+
+        TripDetail tripDetail = (TripDetail) session.getAttribute("tripDetail");
+     
+//      Pagination
+        int page = 1;
+        int endPage = 1;
+        if (page_raw != null) {
+            page = Integer.parseInt(page_raw);
+        }
+        int count = customerDao.getAllCustomer().size();
+        endPage = count / 5;
+        if (count % 5 != 0) {
+            endPage++;
+        }
+        List<Customer> listCustomer = customerDao.getAllCustomerPagination(page);
+
+        session.setAttribute("page", page);
+        request.setAttribute("endPage", endPage);
+        request.setAttribute("orignStation", tripDetail.getTrip().getTripStartingPoint());
+        request.setAttribute("destinationStation", tripDetail.getTrip().getDestination());
+        request.setAttribute("date", tripDetail.getDate().format(formatter));
+        request.setAttribute("tripDetailId", tripDetail.getTripDetailId());
+        request.setAttribute("listCustomer", listCustomer);
+        request.getRequestDispatcher("CustomerBookingConfirm.jsp").forward(request, response);
     }
 
     /**
@@ -72,25 +109,7 @@ public class AdminEditProfileCustomerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String phone = request.getParameter("phone");
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
-        String email = request.getParameter("email");
-        String birthdate = request.getParameter("birthdate");
-
-        DAO dao = new DAO();
-        CustomerDao customerDao = new CustomerDao();
-
-        Customer customer = dao.getCustomerByEmail(email);
-        Customer customerPhone = dao.getCustomerByPhone(phone);
-        if (customer != null && !customerPhone.getCustomerEmail().equals(email)) {
-            request.setAttribute("emailExisted", "Email is already existed!");
-            request.setAttribute("customerPhone", phone);
-            request.getRequestDispatcher("AdminCustomerTablesServlet").forward(request, response);
-        } else {
-            customerDao.updateCustomerInfor(phone, email, firstname, lastname, birthdate);
-            request.getRequestDispatcher("AdminCustomerTablesServlet").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**

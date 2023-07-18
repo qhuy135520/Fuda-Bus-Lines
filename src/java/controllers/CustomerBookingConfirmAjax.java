@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.admin;
+package controllers;
 
 import dal.CustomerDao;
 import java.io.IOException;
@@ -19,7 +19,7 @@ import model.Customer;
  *
  * @author letra
  */
-public class AdminCustomerTablesServlet extends HttpServlet {
+public class CustomerBookingConfirmAjax extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,10 @@ public class AdminCustomerTablesServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminCustomerTablesServlet</title>");
+            out.println("<title>Servlet CustomerBookingConfirmAjax</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminCustomerTablesServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CustomerBookingConfirmAjax at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,28 +59,7 @@ public class AdminCustomerTablesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CustomerDao customerDao = new CustomerDao();
-        HttpSession session = request.getSession();
-        String page_raw = request.getParameter("page");
-
-        List<Customer> customerListFull = customerDao.getAllCustomer();
-        int page = 1;
-        int count = customerListFull.size();
-        if (page_raw != null) {
-            page = Integer.parseInt(page_raw);
-        }
-        int endPage = count / 5;
-        if (count % 5 != 0) {
-            endPage++;
-        }
-
-        List<Customer> customerList = customerDao.getAllCustomerPagination(page);
-
-        session.setAttribute("page", page);
-        request.setAttribute("endPage", endPage);
-        request.setAttribute("customerList", customerList);
-        request.setAttribute("customerListFull", customerListFull);
-        request.getRequestDispatcher("AdminCustomerTables.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -94,32 +73,48 @@ public class AdminCustomerTablesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charsetUTF-8");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+
         CustomerDao customerDao = new CustomerDao();
+
         HttpSession session = request.getSession();
-        String page_raw = request.getParameter("page");
+        String phoneCustomer = request.getParameter("phoneCustomer");
+        int page = (int) session.getAttribute("page");
 
-        String emailExisted = (String) request.getAttribute("emailExisted");
-        String customerPhone = (String) request.getAttribute("customerPhone");
-        List<Customer> customerListFull = customerDao.getAllCustomer();
-        int page = 1;
-        int count = customerListFull.size();
-        if (page_raw != null) {
-            page = Integer.parseInt(page_raw);
+        List<Customer> listCustomer;
+
+        if (phoneCustomer == null || phoneCustomer.equals("")) {
+            listCustomer = customerDao.getAllCustomerPagination(page);
+        } else {
+            listCustomer = customerDao.getLikeCustomerByPhone(phoneCustomer);
         }
-        int endPage = count / 5;
-        if (count % 5 != 0) {
-            endPage++;
+        if (listCustomer != null) {
+            int i = 0;
+            for (Customer customer : listCustomer) {
+                i++;
+                out.println(" <tr>\n"
+                        + "                                                    <td>" + i + "</td>\n"
+                        + "                                                    <td><a href=\"#\"><img src=\"" + customer.getCustomerUrlImg() + "\" class=\"avatar\" alt=\"Avatar\"> " + customer.getCustomerFirstname() + " " + customer.getCustomerLastname() + "</a></td>\n"
+                        + "                                                    <td>" + customer.getCustomerPhone() + "</td>                        \n"
+                        + "                                                    <td>" + customer.getCustomerEmail() + "</td>\n"
+                        + "                                                    <td>" + customer.getCustomerCreatedDate() + "</td>\n"
+                        + "                                                    <td>" + customer.getCustomerBirthdate() + "</td>\n"
+                        + "  <td><button class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#Customer" + customer.getCustomerPhone() + "\">Choose</button></td>"
+                        + "                                                </tr>\n");
+
+            }
+        } else {
+            out.print("  <td></td>\n"
+                    + "    <td></td>\n"
+                    + "    <td></td>  \n"
+                    + "    <td></td>\n"
+                    + "    <td><h6 class=\"text-center\" style=\"color: red\">Not Found !!</h6></td>\n"
+                    + "    <td></td> \n"
+                    + "    <td></td>\n"
+                    + "    <td></td>\n");
         }
-
-        List<Customer> customerList = customerDao.getAllCustomerPagination(page);
-
-        session.setAttribute("page", page);
-        request.setAttribute("endPage", endPage);
-        request.setAttribute("customerList", customerList);
-        request.setAttribute("customerListFull", customerListFull);
-        request.setAttribute("emailExisted", emailExisted);
-        request.setAttribute("customerPhone", customerPhone);
-        request.getRequestDispatcher("AdminCustomerTables.jsp").forward(request, response);
     }
 
     /**

@@ -2,23 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.admin;
 
-import dal.CustomerDao;
-import dal.DAO;
+import dal.BookingDetailDTODao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Customer;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import model.BookingDetailDTO;
 
 /**
  *
  * @author letra
  */
-public class AdminEditProfileCustomerServlet extends HttpServlet {
+public class EmployeeRefundCustomerServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +37,10 @@ public class AdminEditProfileCustomerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminEditProfileCustomerServlet</title>");
+            out.println("<title>Servlet EmployeeRefundCustomerServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminEditProfileCustomerServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet EmployeeRefundCustomerServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +58,18 @@ public class AdminEditProfileCustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        BookingDetailDTODao bookingDetailDTODao = new BookingDetailDTODao();
+        String bookingId_raw = request.getParameter("bookingId");
+        int booking = Integer.parseInt(bookingId_raw);
+        
+        BookingDetailDTO bookingDetailDTO = bookingDetailDTODao.getBookingDetailByBookingId(booking);
+        
+        String paidDate = bookingDetailDTO.getBooking().getPaidDate().format(formatter);
+        paidDate = paidDate.replace("/", "");
+        request.setAttribute("paidDate", paidDate);
+        request.setAttribute("bookingDetailDTO", bookingDetailDTO);
+        request.getRequestDispatcher("vnpay_refund.jsp").forward(request, response);
     }
 
     /**
@@ -72,25 +83,7 @@ public class AdminEditProfileCustomerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String phone = request.getParameter("phone");
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
-        String email = request.getParameter("email");
-        String birthdate = request.getParameter("birthdate");
-
-        DAO dao = new DAO();
-        CustomerDao customerDao = new CustomerDao();
-
-        Customer customer = dao.getCustomerByEmail(email);
-        Customer customerPhone = dao.getCustomerByPhone(phone);
-        if (customer != null && !customerPhone.getCustomerEmail().equals(email)) {
-            request.setAttribute("emailExisted", "Email is already existed!");
-            request.setAttribute("customerPhone", phone);
-            request.getRequestDispatcher("AdminCustomerTablesServlet").forward(request, response);
-        } else {
-            customerDao.updateCustomerInfor(phone, email, firstname, lastname, birthdate);
-            request.getRequestDispatcher("AdminCustomerTablesServlet").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**

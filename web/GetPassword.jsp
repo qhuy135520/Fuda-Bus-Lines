@@ -9,7 +9,9 @@
 <html>
     <head>
         <%@include file="includes/header.jsp" %>
-        <link rel="stylesheet" href="assets/css/loginstyle.css"/>
+        <link rel="stylesheet" href="assets/css/loginstyle.css"/>        
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     </head>
     <body>
         <%@include file="/includes/navbar.jsp" %>
@@ -36,13 +38,13 @@
                                         <i class="bx bxs-user"></i>
                                         <input
                                             type="text"
-                                            placeholder="lastname"
+                                            placeholder="Lastname"
                                             name="lastname"
                                             required
                                             />
                                     </div>
                                     <div class="input-group">
-                                        <i class="bx bxs-calendar"></i>
+                                        <i class="bx bxs-user"></i>
                                         <input
                                             placeholder="Birthdate"
                                             class="textbox-n"
@@ -64,7 +66,7 @@
                                             />
                                     </div>
                                     <div class="input-group">
-                                        <i class="bx bxs-phone"></i>
+                                        <i class="bx bx-mail-send"></i>
                                         <input
                                             type="text"
                                             placeholder="Phone"

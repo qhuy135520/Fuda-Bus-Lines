@@ -11,6 +11,7 @@
     <head>
         <%@include file="includes/header.jsp" %>
         <link rel="stylesheet" href="assets/css/loginstyle.css"/>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
     <body>
         <%@include file="/includes/navbar.jsp" %>
@@ -23,12 +24,13 @@
                     <div class="col align-items-center flex-col sign-up">
                         <div class="form-wrapper align-items-center">
                             <div class="form sign-up">
+                                <img width="150px" height="60px" src="img/logo-img.png" />
                                 <form action="SignUpServlet" method="POST">
                                     <div class="input-group">
                                         <i class="bx bxs-user"></i>
                                         <input
                                             type="text"
-                                            placeholder="Firstname"
+                                            placeholder="First Name"
                                             name="firstname"
                                             required
                                             />
@@ -37,13 +39,13 @@
                                         <i class="bx bxs-user"></i>
                                         <input
                                             type="text"
-                                            placeholder="lastname"
+                                            placeholder="Last Name"
                                             name="lastname"
                                             required
                                             />
                                     </div>
                                     <div class="input-group">
-                                        <i class="bx bxs-user"></i>
+                                        <i class='bx bxs-calendar' ></i>
                                         <input
                                             placeholder="Birthdate"
                                             class="textbox-n"
@@ -56,7 +58,7 @@
                                     </div>
 
                                     <div class="input-group">
-                                        <i class="bx bx-mail-send"></i>
+                                        <i class='bx bxs-envelope' ></i>
                                         <input
                                             type="email"
                                             placeholder="Email"
@@ -65,7 +67,7 @@
                                             />
                                     </div>
                                     <div class="input-group">
-                                        <i class="bx bxs-phone"></i>
+                                        <i class='bx bxs-phone'></i>
                                         <input
                                             type="text"
                                             placeholder="Phone"
@@ -98,7 +100,7 @@
                                 </form>
                                 <p>
                                     <span class="pointer-login"> Already have an account? </span>
-                                    <b onclick="toggle()" class="pointer"> Sign in here </b>
+                                    <b onclick="toggle()" class="pointer"> Sign In Here </b>
                                 </p>
                             </div>
                         </div>
@@ -108,9 +110,9 @@
                     <div class="col align-items-center flex-col sign-in">
                         <div class="form-wrapper align-items-center">
                             <div class="form sign-in">
+                                <img width="150px" height="60px" src="img/logo-img.png" />
                                 <form action="SignInServlet" method="POST">
                                     <h4 style="color: red">${errorUP}</h4>
-                                    <h4 style="color: red">${errorBlock}</h4>
                                     <div class="input-group">
                                         <i class="bx bxs-phone"></i>
                                         <input
@@ -140,7 +142,7 @@
                                 </form>
 
                                 <p class="pointer-login" onclick="window.location = 'ForgotPassword.jsp'">
-                                    <b > Forgot password? </b>
+                                    <b> Forgot password? </b>
                                 </p>
                                 <p>
                                     <span> Don't have an account? </span>
@@ -158,8 +160,10 @@
                     <!-- SIGN IN CONTENT -->
                     <div class="col align-items-center flex-col">
                         <div class="text sign-in">
-                            <h2>WELCOME TO FUDA </h2>
-                            <h2>BUS LINES</h2>
+                            <h2>SIGN IN</h2>
+                                <h5>Welcome to FUDA Bus Lines. We want to bring the best experience for your trip.</h5>
+                                <h5>With a team of top experts with the most quality and fun.</h5>
+                                <h5>Good Luck!</h5>
                         </div>
                         <div class="img sign-in">
                             <img width="100%" src="img/bus-login.png"/>
@@ -172,7 +176,9 @@
                             <img width="100%" src="img/bus-login.png"/>
                         </div>
                         <div class="text sign-up">
-                            <h2>JOIN WITH US</h2>
+                            <h2>SIGN UP</h2>
+                            <h5>Register now,
+                            you will be able to access and use many features with the rights of a loyal customer.</h5>
                         </div>
                     </div>
                     <!-- END SIGN UP CONTENT -->
