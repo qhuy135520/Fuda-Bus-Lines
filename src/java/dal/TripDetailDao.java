@@ -73,7 +73,8 @@ public class TripDetailDao extends DBContext {
         }
         return list;
     }
-public List<TripDetail> getAllTripDetailWithPagination(int page) {
+
+    public List<TripDetail> getAllTripDetailWithPagination(int page) {
         List<TripDetail> list = new ArrayList<>();
         try {
             query = "SELECT [td_id]\n"
@@ -106,6 +107,7 @@ public List<TripDetail> getAllTripDetailWithPagination(int page) {
         }
         return list;
     }
+
     public List<TripDetail> getAllTripDetailWithPaginationGet5Elemetns(int page) {
         List<TripDetail> list = new ArrayList<>();
         try {
@@ -367,12 +369,40 @@ public List<TripDetail> getAllTripDetailWithPagination(int page) {
         return isAcceptable;
     }
 
+    public List<TripDetail> getAllTripDetailByTripOfBusId(String tripOfBusId) {
+        List<TripDetail> list = new ArrayList<>();
+        try {
+            query = "select * from trip_detail where tr_id=?";
+            pst = connection.prepareStatement(query);
+            pst.setString(1, tripOfBusId);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                TripDetail tripDetail = new TripDetail();
+                tripDetail.setTripDetailId(rs.getString("td_id"));
+                tripDetail.setDate(rs.getDate("td_date").toLocalDate());
+                tripDetail.setDepartureTime(rs.getTime("td_depature_time").toString());
+                tripDetail.setTicketPrice(rs.getInt("td_ticket_price"));
+
+                TripDao tripDao = new TripDao();
+                TripOfBus trip = tripDao.getTripOfBusById(rs.getString("tr_id"));
+                tripDetail.setTrip(trip);
+
+                list.add(tripDetail);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         TripDetailDao dao = new TripDetailDao();
         TripDao tripDao = new TripDao();
         LocalDate date = LocalDate.parse("2023-12-06");
         TripOfBus trip = tripDao.getTripOfBusById("DNNA01");
-       boolean tripDetail = dao.isAcceptable(trip, "20:00:00", date);
+        boolean tripDetail = dao.isAcceptable(trip, "20:00:00", date);
         System.out.println(tripDetail);
     }
 
