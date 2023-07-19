@@ -85,7 +85,11 @@
                                 <p class="card-text">${sessionScope.tripDetail.ticketPrice} <i class="fa-solid fa-dong-sign"></i> &nbsp;&nbsp; <i class="fa-solid fa-circle fa-2xs"></i> &nbsp;&nbsp; 2 floors&nbsp;&nbsp; <i class="fa-solid fa-circle fa-2xs"></i> &nbsp;&nbsp;${totalSeatRemaining} seat remaining</p>
                             </div>
                             <p class="route-orign"><i class="fa-solid fa-location-dot font-orign"></i>&nbsp;&nbsp; ${orignStation.stationName} Bus Station</p>
+
                             <p class="route-detail">Bus line: ${sessionScope.tripDetail.trip.during} hours</p>
+
+                            <p class="route-detail">Bus line:  ${sessionScope.tripDetail.trip.during} hours</p>
+
                             <p class="route-destinations"><i class="fa-solid fa-location-dot font-destinations"></i>&nbsp;&nbsp; ${destinationStation.stationName} Bus Station</p>
                         </div>
 
