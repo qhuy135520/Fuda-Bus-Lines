@@ -89,7 +89,6 @@
 
                                 <p class="route-destinations"><i class="fa-solid fa-location-dot font-destinations"></i>&nbsp;&nbsp; ${destinationStation.stationName} Bus Station</p>
 
-                                <p class="route-destinations"><i class="fa-solid fa-location-dot font-destinations"></i>&nbsp;&nbsp;  ${destinationStation.stationName} Bus Station</p>
 
                             </div>
 

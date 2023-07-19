@@ -88,7 +88,6 @@
 
                             <p class="route-detail">Bus line: ${sessionScope.tripDetail.trip.during} hours</p>
 
-                            <p class="route-detail">Bus line:  ${sessionScope.tripDetail.trip.during} hours</p>
 
                             <p class="route-destinations"><i class="fa-solid fa-location-dot font-destinations"></i>&nbsp;&nbsp; ${destinationStation.stationName} Bus Station</p>
                         </div>

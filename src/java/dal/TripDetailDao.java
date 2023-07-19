@@ -400,10 +400,8 @@ public class TripDetailDao extends DBContext {
     public static void main(String[] args) {
         TripDetailDao dao = new TripDetailDao();
         TripDao tripDao = new TripDao();
-        LocalDate date = LocalDate.parse("2023-12-06");
-        TripOfBus trip = tripDao.getTripOfBusById("DNNA01");
-        boolean tripDetail = dao.isAcceptable(trip, "20:00:00", date);
-        System.out.println(tripDetail);
+        List<TripDetail> list = dao.getAllTripDetailByTripOfBusId("DNHTV1");
+        System.out.println(list.size());
     }
 
 }
