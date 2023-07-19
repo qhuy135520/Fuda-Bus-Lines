@@ -41,9 +41,9 @@
                         </div>
                         <div class="card-body">
 
-                            <p style="font-size: 20px !important;" class="route-orign"><i class="fa-solid fa-location-dot font-orign"></i>&nbsp;&nbsp; Ben xe ${startingPoint}</p>
-                            <p style="font-size: 20px !important; "class="route-detail">Bus line: ${sessionScope.tripDetail.trip.during}km - ${sessionScope.tripDetail.trip.during} hours</p>
-                            <p style="font-size: 20px !important; "class="route-destinations"><i class="fa-solid fa-location-dot font-destinations"></i>&nbsp;&nbsp; Ben xe ${destination}</p>
+                            <p style="font-size: 20px !important;" class="route-orign"><i class="fa-solid fa-location-dot font-orign"></i>&nbsp;&nbsp; ${startingPoint} Bus Station</p>
+                            <p style="font-size: 20px !important; "class="route-detail">Bus line: ${sessionScope.tripDetail.trip.during} hours</p>
+                            <p style="font-size: 20px !important; "class="route-destinations"><i class="fa-solid fa-location-dot font-destinations"></i>&nbsp;&nbsp; Ben xe ${destination} Bus Station</p>
                         </div>
 
                         <hr>

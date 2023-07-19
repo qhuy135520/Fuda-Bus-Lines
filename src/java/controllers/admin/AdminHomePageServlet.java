@@ -90,7 +90,7 @@ public class AdminHomePageServlet extends HttpServlet {
             request.setAttribute("tripDetailId" + i, listTripDetailGet5Elemetns.get(i).getTripDetailId());
         }
         float seatCalculate = ((float) seatBooked / (float) totalSeat) * 100;
-        System.out.println(seatBooked);
+
         seatCalculate = Math.round(seatCalculate);
         request.setAttribute("revenueThisMonth", formatRevenue.format(revenueThisMonth));
         request.setAttribute("revenueThisYear", formatRevenue.format(revenueThisYear));
